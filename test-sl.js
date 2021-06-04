@@ -20,7 +20,9 @@ define(
         }
         
         return {
+
             onRequest: _onRequest
+            
         };
     }
 );
