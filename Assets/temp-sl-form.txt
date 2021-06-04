@@ -1,0 +1,15 @@
+        /**
+          * Build the main Suitelet form
+          *
+          * @param {Object} context
+          * @Since 2015.2
+          */
+        function buildForm(frm, params) {
+            var LOG_TITLE = 'buildForm';
+            LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
+            
+            var fld, grp;
+            {{__content__}}
+            
+            LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
+        }

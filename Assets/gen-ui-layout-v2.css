@@ -1,0 +1,39 @@
+/* GLOBAL CLASSES */
+.gl-hidden {
+    display: none;
+}
+.gl-brd-red {
+    border: 1px solid red;
+}
+
+/* BUTTONS */
+.gl-btn,
+.gl-btn-def {
+    
+}
+.gl-btn-def {
+    background-image: linear-gradient(rgb(76, 157, 255) 2%, rgb(24, 123, 242) 100%);
+}
+
+
+
+/* UI CLASSES */
+.sg-ui {
+    font-size: 16px;
+    box-sizing: border-box;
+    /* border: 1px solid #eaeded; */
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin: 0;
+    padding: 1.5em;
+    background-color: #fafafa; //#f2f3f3;
+    box-shadow: 0 1px 1px 0 #78909C;
+}
+
+.sg-ui-hdr {
+}
+
+.sg-ui-hdr .hdr-cell {
+    
+}

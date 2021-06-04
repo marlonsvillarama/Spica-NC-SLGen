@@ -1,0 +1,25 @@
+{
+    "name": "Sample Suitelet Name",
+    "form": {
+        "grps": [
+            { "id": "_grp1", "lbl": "Group 1" }
+        ],
+        "flds": [
+            {
+                "id": "_text",
+                "lbl": "First Name",
+                "type": "text",
+            },
+            {
+                "id": "_cb",
+                "lbl": "Is OK?",
+                "type": "checkbox"
+            },
+            {
+                "id": "_list",
+                "lbl": "Customer",
+                "type": "-2"
+            }
+        ]
+    }
+}
