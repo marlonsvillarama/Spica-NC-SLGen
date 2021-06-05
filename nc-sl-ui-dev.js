@@ -11,7 +11,7 @@
  * Date: Aug 03, 2020
  */
 
-define(
+ define(
     [
         'N/file',
         'N/log',
@@ -63,23 +63,23 @@ define(
             }
         }; */
         // var PREFIX = 'custpage_' + APP + '_ui_';
-        /* var FORM_CONFIG = {
+        var FORM_CONFIG = {
             GROUPS: {
-                SL_MAIN: PREFIX + 'grpmain'
+                SL_MAIN: PREF.PAGE + APP + 'grpmain'
             },
             FIELDS: {
-                SL_TYPE: PREFIX + 'sltype',
-                LAYOUT_HTML: 'custrecord_nc_conf_layout',
-                LAYOUT_CSS: 'custrecord_nc_conf_css',
-                LAYOUT_JS: 'custrecord_nc_conf_js'
+                SL_TYPE: PREF.PAGE + APP + 'sltype',
+                LAYOUT_HTML: PREF.CUSRECFLD + APP + 'conf_html',
+                LAYOUT_CSS: PREF.CUSRECFLD + APP + 'conf_css',
+                LAYOUT_JS: PREF.CUSRECFLD + APP + 'conf_js'
             },
             BUTTONS: {
-                SAVE: PREFIX + 'btnsave'
+                SAVE: PREF.PAGE + APP + 'btnsave'
             }
-        }; */
-        var APP_FOLDER = 'SuiteScripts/nc/';
+        };
+        var APP_FOLDER = 'SuiteScripts/larnell/';
         var ASSETS_FOLDER = APP_FOLDER + 'Assets/';
-        var CLIENT_SCRIPT = APP_FOLDER + 'nc-cs-ui-dev.js';
+        var CLIENT_SCRIPT = APP_FOLDER + 'cs-gen-ui-dev.js';
         var BACKEND_RL = {
             SCRIPT: PREF.SCRIPT + APP + 'rl',
             DEPLOY: PREF.DEPLOY + APP + 'rl'
@@ -144,7 +144,7 @@ define(
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             
             var str = '';
-            var rtype = 'customrecord_nc_gen_conf';
+            var rtype = 'customrecord_nc_conf';
             var rid = '1';
             var config;
             
@@ -160,18 +160,22 @@ define(
                 return 'ERR: ' + msg;
             }
             
-            var strHTML = getFileContents(config.getValue({ fieldId: FORM_CONFIG.FIELDS.LAYOUT_HTML }));
+            LOG.debug({ title: LOG_TITLE, details: JSON.stringify(FORM_CONFIG.FIELDS.LAYOUT_HTML) });
+            //var strHTML = getFileContents(config.getValue({ fieldId: FORM_CONFIG.FIELDS.LAYOUT_HTML }));
+            var strHTML = getFileContents(config.getValue({ fieldId: 'custrecord_nc_conf_html' }));
             if (strHTML.indexOf('ERR') >= 0) {
                 return str;
             }
             
-            var strCSS = getFileContents(config.getValue({ fieldId: FORM_CONFIG.FIELDS.LAYOUT_CSS }));
+            //var strCSS = getFileContents(config.getValue({ fieldId: FORM_CONFIG.FIELDS.LAYOUT_CSS }));
+            var strCSS = getFileContents(config.getValue({ fieldId: 'custrecord_nc_conf_css' }));
             if (strCSS.indexOf('ERR') >= 0) {
                 return str;
             }
             strHTML = strHTML.replace('{{__styles__}}', strCSS);
             
-            var strJS = getFileContents(config.getValue({ fieldId: FORM_CONFIG.FIELDS.LAYOUT_JS }));
+            //var strJS = getFileContents(config.getValue({ fieldId: FORM_CONFIG.FIELDS.LAYOUT_JS }));
+            var strJS = getFileContents(config.getValue({ fieldId: 'custrecord_nc_conf_js' }));
             if (strJS.indexOf('ERR') >= 0) {
                 return str;
             }
