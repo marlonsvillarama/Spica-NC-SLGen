@@ -2,16 +2,9 @@
  * @NApiVersion 2.x
  * @NScriptType Restlet
  * @NModuleScope SameAccount
- *
- * Appficiency Copyright 2020
- *
- * Description: Generates custom PDF layout depending on PDF template assigned to CI record.
- *
- * Author: roach
- * Date: Aug 03, 2020
  */
 
-define(
+ define(
     [
         'N/file',
         'N/https',
@@ -35,7 +28,7 @@ define(
         
         PARSER
     ) {
-        var APP = 'lrnl';
+        var APP = 'nc_sl';
         var PREFIX = 'custpage_' + APP + '_ui_';
         var FORM_CONFIG = {
             GROUPS: {
@@ -43,9 +36,9 @@ define(
             },
             FIELDS: {
                 SL_TYPE: PREFIX + 'sltype',
-                LAYOUT_HTML: 'custrecord_lrnl_gen_conf_layout',
-                LAYOUT_CSS: 'custrecord_lrnl_gen_conf_css',
-                LAYOUT_JS: 'custrecord_lrnl_gen_conf_js'
+                LAYOUT_HTML: 'custrecord_nc_conf_layout',
+                LAYOUT_CSS: 'custrecord_nc_conf_css',
+                LAYOUT_JS: 'custrecord_nc_conf_js'
             },
             BUTTONS: {
                 SAVE: PREFIX + 'btnsave'
@@ -68,12 +61,16 @@ define(
         };
         var RECORDS = {
             SL: {
-                TYPE: 'customrecord_lrnl_sl',
+                TYPE: 'customrecord_nc_sl_ui',
                 FIELDS: {
-                    FORM: 'custrecord_lrnl_sl_frm',
+                    /*FORM: 'custrecord_lrnl_sl_frm',
                     LIST: 'custrecord_lrnl_sl_list',
                     SCRIPT: 'custrecord_lrnl_sl_scr',
-                    DEPLOYMENT: 'custrecord_lrnl_sl_dep'
+                    DEPLOYMENT: 'custrecord_lrnl_sl_dep'*/
+                    NAME: 'custrecord_nc_sl_ui_name',
+                    CONTENT: 'custrecord_nc_sl_ui_content',
+                    SCRIPT: 'custrecord_nc_sl_ui_scr',
+                    DEPLOYMENT: 'custrecord_nc_sl_ui_dep'
                 }
             },
             SUITELET: {
@@ -264,18 +261,22 @@ define(
                     if (objContent.form) {
                         LOG.debug({ title: LOG_TITLE + ' saving ' + RECORDS.SL.FIELDS.FORM, details: objContent.form });
                         rec.setValue({
-                            fieldId: RECORDS.SL.FIELDS.FORM,
+                            fieldId: 'custrecord_nc_sl_ui_content',
                             value: JSON.stringify(objContent.form)
                         });
                     }
-                    
-                    if (objContent.list) {
+                    /*NAME: 'custrecord_nc_sl_ui_name',
+                    CONTENT: 'custrecord_nc_sl_ui_content',
+                    SCRIPT: 'custrecord_nc_sl_ui_scr',
+                    DEPLOYMENT: 'custrecord_nc_sl_ui_dep'
+                    */
+                    /*if (objContent.list) {
                         LOG.debug({ title: LOG_TITLE + ' saving ' + RECORDS.SL.FIELDS.LIST, details: objContent.list });
                         rec.setValue({
                             fieldId: RECORDS.SL.FIELDS.LIST,
                             value: JSON.stringify(objContent.list)
                         });
-                    }
+                    }*/
                     
                     obj.id = rec.save();
                     LOG.debug({ title: LOG_TITLE, details: 'new id = ' + obj.id });
