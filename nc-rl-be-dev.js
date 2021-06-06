@@ -28,9 +28,31 @@
         
         PARSER
     ) {
-        var APP = 'nc_sl';
-        var PREFIX = 'custpage_' + APP + '_ui_';
-        var FORM_CONFIG = {
+        var APP = '';
+        var APP = '_nc_sl_';
+        var PREF = {
+            CUSREC: 'customrecord',
+            CUSRECFLD: 'custrecord',
+            SCRIPT: 'customscript',
+            DEPLOY: 'customdeploy',
+            PAGE: 'custpage',
+            
+            CONF: {
+                RECORD: APP + 'conf_',
+                HTML: 'html',
+                CSS: 'css',
+                JS: 'js'
+            },
+            UI: {
+                RECORD: APP + 'sl_ui_',
+                NAME: 'name',
+                CONTENT: 'content',
+                SCRIPT: 'scr',
+                DEPLOY: 'dep'
+            }
+        };
+        // var PREFIX = 'custpage_' + APP + '_ui_';
+        /* var FORM_CONFIG = {
             GROUPS: {
                 SL_MAIN: PREFIX + 'grpmain'
             },
@@ -43,22 +65,22 @@
             BUTTONS: {
                 SAVE: PREFIX + 'btnsave'
             }
-        };
-        var APP_FOLDER = 'SuiteScripts/larnell/';
+        }; */
+        var APP_FOLDER = 'SuiteScripts/nc/';
         var ASSETS_FOLDER = APP_FOLDER + 'Assets/';
-        var OUTPUT_FOLDER = APP_FOLDER + 'Output/';
+        // var OUTPUT_FOLDER = APP_FOLDER + 'Output/';
         var URLS = {
             SCRIPT_POST: '/app/common/scripting/script.nl'
         };
         
-        var CLIENT_SCRIPT = APP_FOLDER + 'cs-gen-ui-dev.js';
+        /* var CLIENT_SCRIPT = APP_FOLDER + 'cs-gen-ui-dev.js';
         var SRC_FILES = {
             UI: {
                 HTML: ASSETS_FOLDER + 'gen-ui-layout.html',
                 CSS: ASSETS_FOLDER + 'gen-ui-layout.css',
                 JS: ASSETS_FOLDER + 'gen-ui-layout.js'
             }
-        };
+        }; */
         var RECORDS = {
             SL: {
                 TYPE: 'customrecord_nc_sl_ui',
@@ -90,7 +112,7 @@
             UI_FORM: ASSETS_FOLDER + 'temp-sl-form.txt',
             UI_LIST: ASSETS_FOLDER + 'temp-sl-list.txt'
         };
-        var FN_NAMES = {
+        /* var FN_NAMES = {
             BUILD_FORM: {
                 NAME: 'buildForm({{__parms__}})',
                 PARAMS: [
@@ -104,27 +126,27 @@
                     ''
                 ]
             }
-        };
+        }; */
         
         /**
          */
-        function buildSLForm(form, params) {
+        /* function buildSLForm(form, params) {
             var LOG_TITLE = 'buildSLForm';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
-        }
+        } */
         
         /**
          */
-        function buildSLList(form, params) {
+        /* function buildSLList(form, params) {
             var LOG_TITLE = 'buildSLList';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
-        }
+        } */
         
         /**
          */
-        function getFileContents(fileId) {
+        /* function getFileContents(fileId) {
             var LOG_TITLE = 'getFileContents';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             
@@ -143,11 +165,11 @@
             
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
             return str;
-        }
+        } */
         
         /**
          */
-        function buildHtmlLayout() {
+        /* function buildHtmlLayout() {
             var LOG_TITLE = 'buildHtmlLayout';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             
@@ -187,7 +209,7 @@
             
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
             return str;
-        }
+        } */
         
         /**
          */
@@ -225,23 +247,26 @@
             LOG.debug({ title: LOG_TITLE + ' content', details: objContent });
             // LOG.debug({ title: LOG_TITLE + ' content type', details: Object.prototype.toString.call(objContent) });
             
-            // var objConfig = JSON.parse(params.config);
-            // LOG.debug({ title: LOG_TITLE + ' config', details: objConfig });
-            // LOG.debug({ title: LOG_TITLE, details: 'record id = ' + objConfig.id });
-            // LOG.debug({ title: LOG_TITLE + ' config type', details: Object.prototype.toString.call(objConfig) });
+            /* var objConfig = JSON.parse(params.config);
+            LOG.debug({ title: LOG_TITLE + ' config', details: objConfig });
+            LOG.debug({ title: LOG_TITLE, details: 'record id = ' + objConfig.id });
+            LOG.debug({ title: LOG_TITLE + ' config type', details: Object.prototype.toString.call(objConfig) }); */
             
             var rec = null;
             // var rid = 0;
             var obj = {};
             try {
                 if (objContent.id) {
+                    var objSL = {
+                        
+                    }
                     RECORD.submitFields({
                         type: RECORDS.SL.TYPE,
                         id: objContent.id,
                         values: {
-                            'name': objContent.name ? objContent.name : 'Suitelet_' + (new Date()).getTime().toString(),
-                            'custrecord_lrnl_sl_frm': (objContent.form ? JSON.stringify(objContent.form) : ''),
-                            'custrecord_lrnl_sl_lst': (objContent.list ? JSON.stringify(objContent.list) : '')
+                            'custrecord_nc_sl_ui_name': objContent.name ? objContent.name : 'Suitelet_' + (new Date()).getTime().toString(),
+                            'custrecord_nc_sl_ui_content': (objContent.form ? JSON.stringify(objContent.form) : '')
+                            // 'custrecord_lrnl_sl_lst': (objContent.list ? JSON.stringify(objContent.list) : '')
                         }
                     });
                     // rid = objContent.id;
@@ -450,8 +475,8 @@
         
         /**
          */
-        function createScript(params) {
-        }
+        // function createScript(params) {
+        // }
         
         /**
          */

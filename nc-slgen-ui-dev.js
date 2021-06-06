@@ -21,7 +21,7 @@
         'N/ui/serverWidget',
         'N/url',
         
-        './Assets/gen-types.js'
+        './Assets/nc-types.js'
     ],
 
     function(
@@ -77,9 +77,9 @@
                 SAVE: PREF.PAGE + APP + 'btnsave'
             }
         };
-        var APP_FOLDER = 'SuiteScripts/larnell/';
+        var APP_FOLDER = 'SuiteScripts/nc/';
         var ASSETS_FOLDER = APP_FOLDER + 'Assets/';
-        var CLIENT_SCRIPT = APP_FOLDER + 'cs-gen-ui-dev.js';
+        var CLIENT_SCRIPT = APP_FOLDER + 'nc-cs-ui-dev.js';
         var BACKEND_RL = {
             SCRIPT: PREF.SCRIPT + APP + 'rl',
             DEPLOY: PREF.DEPLOY + APP + 'rl'
@@ -208,23 +208,6 @@
                 label: 'Canvas'
             });
             fld.defaultValue = buildHtmlLayout();
-            // form.addFieldGroup({ id: FORM_CONFIG.GROUPS.SL_MAIN, label: 'We like it here!' });
-            
-            // fld = form.addField({
-                // id: FORM_CONFIG.FIELDS.SL_TYPE,
-                // type: UI.FieldType.SELECT,
-                // label: 'Suitelet Type',
-                // container: FORM_CONFIG.GROUPS.SL_MAIN
-            // });
-            // fld.addSelectOption({ value: '', text: '-- Choose one -' });
-            // fld.addSelectOption({ value: 'form', text: 'Form' });
-            // fld.addSelectOption({ value: 'list', text: 'List' });
-            
-            // form.addButton({
-                // id: FORM_CONFIG.BUTTONS.SAVE,
-                // label: 'Save Work',
-                // functionName: 'forImplem()'
-            // });
             
             if (params.type) {
                 switch(params.type.toLowerCase()) {
