@@ -7,6 +7,7 @@
     <title>Document</title>
     
     <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     
@@ -46,14 +47,12 @@
                             <div class="hdr">
                                 <span>Avengers</span>
                                 <div class="hdr-actions">
-                                    <!-- <div>Default</div>
-                                    <div>2 columns</div>
-                                    <div>1 column</div> -->
+                                    <div class="btn-rem-grp">Remove</div>
                                 </div>
                             </div>
-                            <div class="con">
-                                <div class="layout-col nc-flex-col">
-                                    <div class="nc-fld nc-fld-text">
+                            <div class="con layout-grp" id="ncLayGrp_111">
+                                <div class="layout-col nc-flex-col" id="ncLayCol_111_1">
+                                    <!-- <div class="nc-fld nc-fld-text">
                                         <label>First Name</label>
                                         <div>&nbsp;</div>
                                     </div>
@@ -64,17 +63,17 @@
                                     <div class="nc-fld nc-fld-ltext">
                                         <label>Email Name</label>
                                         <div>&nbsp;</div>
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div class="layout-col nc-flex-col">
-                                    <div class="nc-fld nc-fld-phone">
+                                <div class="layout-col nc-flex-col" id="ncLayCol_111_2">
+                                    <!-- <div class="nc-fld nc-fld-phone">
                                         <label>Phone No.</label>
                                         <div>&nbsp;</div>
                                     </div>
                                     <div class="nc-fld nc-fld-cb">
                                         <label>Is Active</label>
                                         <div>&nbsp;</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!-- <div>
                                     <div class="nc-fld nc-fld-text">
@@ -106,14 +105,15 @@
                             <div class="hdr">
                                 <span>X-Men</span>
                                 <div class="hdr-actions">
+                                    <div class="btn-rem-grp">Remove</div>
                                     <!-- <div>Default</div>
                                     <div>2 columns</div>
                                     <div>1 column</div> -->
                                 </div>
                             </div>
-                            <div class="con">
-                                <div class="layout-col nc-flex-col">
-                                    <div class="nc-fld nc-fld-text">
+                            <div class="con layout-grp" id="ncLayGrp_222">
+                                <div class="layout-col nc-flex-col" id="ncLayCol_222_1">
+                                    <!-- <div class="nc-fld nc-fld-text">
                                         <label>First Name</label>
                                         <div>&nbsp;</div>
                                     </div>
@@ -124,23 +124,23 @@
                                     <div class="nc-fld nc-fld-ltext">
                                         <label>Email Name</label>
                                         <div>&nbsp;</div>
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div>
-                                    <div class="nc-fld nc-fld-phone">
+                                <div class="layout-col nc-flex-col" id="ncLayCol_222_2">
+                                    <!-- <div class="nc-fld nc-fld-phone">
                                         <label>Phone No.</label>
                                         <div>&nbsp;</div>
                                     </div>
                                     <div class="nc-fld nc-fld-cb">
                                         <label>Is Active</label>
                                         <div>&nbsp;</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="nc-diag-tabs">
+                <!-- <div class="nc-diag-tabs">
                     <div class="hdr">
                         <label for="nc-buttons">Subtabs</label>
                     </div>
@@ -150,7 +150,7 @@
                         <div class="nc-btn">Download Files</div>
                         <div class="nc-btn">File Case</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="nc-sb">
@@ -158,31 +158,22 @@
             <div class="nc-sb-con">
                 <div class="nc-sb-components">
                     <div class="nc-comp-grp">
-                        <div class="nc-comp-grp-hdr">Layouts</div>
-                        <div class="nc-comp-grp-items">
-                            <div class="nc-comp-grp-item">Default (flow)</div>
-                            <div class="nc-comp-grp-item">One column only</div>
-                            <div class="nc-comp-grp-item">Two columns</div>
-                        </div>
-                    </div>
-                    <div class="nc-comp-grp">
                         <div class="nc-comp-grp-hdr">Containers</div>
                         <div class="nc-comp-grp-items">
                             <div class="nc-comp-grp-item">Field Group</div>
                             <div class="nc-comp-grp-item">Tab</div>
-                            <div class="nc-comp-grp-item">Two columns</div>
                         </div>
                     </div>
                     <div class="nc-comp-grp">
                         <div class="nc-comp-grp-hdr">Fields</div>
                         <div class="nc-comp-grp-items">
-                            <div class="nc-comp-grp-item">Checkbox</div>
-                            <div class="nc-comp-grp-item">Currency</div>
-                            <div class="nc-comp-grp-item">Document</div>
-                            <div class="nc-comp-grp-item">Free-Form Text</div>
-                            <div class="nc-comp-grp-item">List/Record</div>
-                            <div class="nc-comp-grp-item">Long Text</div>
-                            <div class="nc-comp-grp-item">Multi-select</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCB">Checkbox</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCurr">Currency</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompDoc">Document</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompText">Free-Form Text</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompList">List/Record</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompLongText">Long Text</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompMulti">Multi-select</div>
                         </div>
                     </div>
                 </div>
