@@ -58,16 +58,31 @@ body {
 .nc-flex-ai-ctr {
     align-items: center;
 }
-
-
 .brd-red {
     border: 1px solid red;
 }
+
+
+.nc-wrapper {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .nc-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 100vh;
+    height: calc(100vh - 11.5em);
     font-family: var(--gl-font);
     font-size: var(--gl-font-size);
     color: var(--gl-font-color);
@@ -82,7 +97,7 @@ body {
 .nc-ws {
     display: flex;
     flex-direction: column;
-    width: calc(100vw - 16.875em);
+    width: calc(100% - 16.875em);
     /* border: 1px solid red; */
     /* padding: 1em; */
 
@@ -148,7 +163,7 @@ body {
 }
 .nc-diag-sec > .hdr > button {
     font-size: 0.875em;
-    /* font-weight: bold; */
+    font-weight: bold;
     border: 1px solid var(--btn-brd);
     padding: 0.5em 0.75em;
 }

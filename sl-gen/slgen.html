@@ -6,12 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="slgen.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     
+    <div class="nc-ui">
+        
+    </div>
+    <div class="nc-topbar">
+        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Name your Suitelet">
+        <button>SAVE & BUILD</button>
+    </div>
     <div class="nc-wrapper">
+        <div class="nc-sb">
+            <div class="nc-sb-hdr">Suitelet Generator</div>
+            <div class="nc-sb-con">
+                <div class="nc-sb-components">
+                    <div class="nc-comp-grp">
+                        <div class="nc-comp-grp-hdr">Containers</div>
+                        <div class="nc-comp-grp-items">
+                            <div class="nc-comp-grp-item">Field Group</div>
+                            <div class="nc-comp-grp-item">Tab</div>
+                        </div>
+                    </div>
+                    <div class="nc-comp-grp">
+                        <div class="nc-comp-grp-hdr">Fields</div>
+                        <div class="nc-comp-grp-items">
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCB">Checkbox</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCurr">Currency</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompDoc">Document</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompText">Free-Form Text</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompList">List/Record</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompLongText">Long Text</div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompMulti">Multi-select</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="nc-ws">
             <div class="ns-ws-hdr">
                 <input type="text" name="slName" id="slName" class="sl-name" placeholder="Name your Suitelet">
@@ -153,33 +186,7 @@
                 </div> -->
             </div>
         </div>
-        <div class="nc-sb">
-            <div class="nc-sb-hdr">Suitelet Components</div>
-            <div class="nc-sb-con">
-                <div class="nc-sb-components">
-                    <div class="nc-comp-grp">
-                        <div class="nc-comp-grp-hdr">Containers</div>
-                        <div class="nc-comp-grp-items">
-                            <div class="nc-comp-grp-item">Field Group</div>
-                            <div class="nc-comp-grp-item">Tab</div>
-                        </div>
-                    </div>
-                    <div class="nc-comp-grp">
-                        <div class="nc-comp-grp-hdr">Fields</div>
-                        <div class="nc-comp-grp-items">
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCB">Checkbox</div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCurr">Currency</div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompDoc">Document</div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompText">Free-Form Text</div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompList">List/Record</div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompLongText">Long Text</div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompMulti">Multi-select</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    <script src="index.js"></script>
+    <script src="slgen.js"></script>
 </body>
 </html>

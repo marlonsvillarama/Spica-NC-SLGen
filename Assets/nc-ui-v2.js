@@ -68,7 +68,7 @@
             elFld.setAttribute('class', 'nc-fld nc-fld-text');
             elFld.setAttribute('draggable', 'true');
             elFld.setAttribute('id', 'ncEl_' + getTS());
-            elFld.innerHTML = '<label>' + elName + '</label><div>&nbsp;</div>';
+            elFld.innerHTML = '<label>' + elName.toUpperCase() + '</label><div>&nbsp;</div>';
         }
         else if (idEl.indexOf('ncEl') >= 0) {
             dragEl = document.getElementById(id);
