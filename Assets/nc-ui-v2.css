@@ -25,8 +25,8 @@
     --btn-brd: #78909C;
     --btn-grad1: #CFD8DC;
     --btn-grad2: #ECEFF1;
-    --btn-grad1-hov: #90A4AE;
-    --btn-grad2-hov: #B0BEC5;
+    --btn-grad1-hov: #B0BEC5;
+    --btn-grad2-hov: #CFD8DC;
     /* --btn-def-grad1: #2196F3; */
 
     --item-brd: #90A4AE;
@@ -173,7 +173,7 @@ body {
     /* display: flex;
     flex-direction: column; */
     gap: 1em;
-    background-color: var(--ws-bg);
+    /* background-color: var(--ws-bg); */
     padding: 0.75em 1.5em 1em;
     /* height: 9999em; */
     overflow-y: auto;
@@ -185,16 +185,16 @@ body {
     gap: 0.5em;
 }
 .nc-diag-sec > .hdr {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     /* gap: 1.25em; */
     background-color: var(--hdr-bg);
     color: #FFFFFF;
     font-size: 0.875em;
     /* padding: 0.375em 0.75em; */
-    border-radius: 3px;
+    border-radius: 5px;
 }
 .nc-diag-sec > .hdr > .title {
     font-size: 1em;
@@ -205,7 +205,12 @@ body {
     font-size: 0.875em;
     font-weight: bold;
     border: 1px solid var(--btn-brd);
+    background: linear-gradient(0deg, var(--btn-grad1), var(--btn-grad2));
     padding: 0.5em 0.75em;
+    cursor: pointer;
+}
+.nc-diag-sec > .hdr > button:hover {
+    background: linear-gradient(0deg, var(--btn-grad1-hov), var(--btn-grad2-hov));
 }
 
 
@@ -228,23 +233,23 @@ body {
     font-size: 0.75em;
 }
 .nc-sb-components {
-    padding: 0.5em 1em;
-    display: flex;
-    flex-direction: column;
+    padding: 1em 1.25em;
+    /* display: flex;
+    flex-direction: column; */
     gap: 1em;
     /* height: 5000px; */
 }
-.nc-comp-grp {
+/* .nc-comp-grp {
     display: flex;
     flex-direction: column;
     gap: 0.75em;
     padding: .5em 0;
-    /* border: 1px solid red; */
-}
-.nc-comp-grp div {
-    /* padding: 0.375em 0.75em; */
-    /* border-radius: 3px; */
-}
+    border: 1px solid red;
+} */
+/* .nc-comp-grp div {
+    padding: 0.375em 0.75em;
+    border-radius: 3px;
+} */
 .nc-comp-grp-hdr {
     padding: 0.75em 1.25em;
     background-color: #FFFFFF;
@@ -252,12 +257,12 @@ body {
     cursor: pointer;
 }
 .nc-comp-grp-items {
-    margin-left: 1.5em;
+    /* margin-left: 1.5em; */
     /* padding: 1.375em 0; */
     /* padding-bottom: 0.125em; */
     /* border: 1px solid red; */
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     gap: 0.75em;
 }
 .nc-comp-grp-items > div {
@@ -323,8 +328,8 @@ body {
 
 /* GROUPS */
 .nc-diag-grps > .con {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     gap: 0.25em;
     padding: 0 1.5em;
 }
@@ -334,10 +339,10 @@ body {
 }
 .nc-grp > .hdr {
     background-color: var(--grp-hdr-bg);
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
 }
 .nc-grp > .hdr span,
 .nc-grp > .hdr .btn-rem-grp {

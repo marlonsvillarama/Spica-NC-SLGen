@@ -107,5 +107,13 @@
         }
     }
 
+    function initControls() {
+        var btnAddGrp = document.getElementById('btnAddGrp');
+        btnAddGrp.addEventListener('click', function(e) {
+            alert('adding field group');
+        });
+    }
+
+    initControls();
     initDnD();
 })();

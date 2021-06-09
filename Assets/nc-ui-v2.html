@@ -4,15 +4,15 @@
 </style>
 <div class="nc-wrapper">
     <div class="nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb nc-topbar">
-        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Enter a name for your Suitelet">
+        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Enter a name for your Suitelet here...">
         <button class="nc-bold">SAVE & BUILD</button>
     </div>
     <div class="nc-flex-row nc-flex-jc-sb nc-main">
         <div class="nc-flex-col nc-sb">
             <div class="nc-bold nc-pn-hdr">Components</div>
             <div class="nc-sb-con">
-                <div class="nc-sb-components">
-                    <div class="nc-comp-grp">
+                <div class="nc-sb-components nc-flex-col">
+                    <!-- <div class="nc-comp-grp">
                         <div class="nc-comp-grp-hdr">Containers</div>
                         <div class="nc-comp-grp-items">
                             <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompGrp">
@@ -24,10 +24,10 @@
                                 <span>Subtab</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="nc-comp-grp">
-                        <div class="nc-comp-grp-hdr">Fields</div>
-                        <div class="nc-comp-grp-items">
+                    </div> -->
+                    <!-- <div class="nc-comp-grp nc-flex-col"> -->
+                        <!-- <div class="nc-comp-grp-hdr">Fields</div> -->
+                        <div class="nc-comp-grp-items nc-flex-col">
                             <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompCB">
                                 <div><i class="fas fa-check"></i></div>
                                 <span>Checkbox</span>
@@ -36,17 +36,29 @@
                                 <div><i class="fas fa-dollar-sign"></i></div>
                                 <span>Currency</span>
                             </div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompDoc">
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompDate">
+                                <div><i class="fas fa-calendar-alt"></i></div>
+                                <span>Date</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompDateTime">
+                                <div><i class="fas fa-calendar-plus"></i></div>
+                                <span>Date Time</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompFile">
                                 <div><i class="fas fa-file-alt"></i></div>
-                                <span>Document</span>
+                                <span>File</span>
                             </div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompText">
-                                <div><i class="fas fa-font"></i></div>
-                                <span>Free-Form Text</span>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompFlt">
+                                <div><i class="fas fa-divide"></i></div>
+                                <span>Float</span>
                             </div>
-                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompList">
-                                <div><i class="fas fa-caret-square-down"></i></div>
-                                <span>List/Record</span>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompImg">
+                                <div><i class="fas fa-image"></i></div>
+                                <span>Image</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompInt">
+                                <div><i class="fas fa-info"></i></div>
+                                <span>Integer</span>
                             </div>
                             <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompLongText">
                                 <div><i class="fas fa-align-left"></i></div>
@@ -54,10 +66,46 @@
                             </div>
                             <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompMulti">
                                 <div><i class="fas fa-stream"></i></div>
-                                <span>Multi-select</span>
+                                <span>Multiselect</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompPwd">
+                                <div><i class="fas fa-unlock"></i></div>
+                                <span>Password</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompPct">
+                                <div><i class="fas fa-percent"></i></div>
+                                <span>Percent</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompPhone">
+                                <div><i class="fas fa-phone"></i></div>
+                                <span>Phone</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompList">
+                                <div><i class="fas fa-caret-square-down"></i></div>
+                                <span>Select</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompRichText">
+                                <div><i class="fas fa-superscript"></i></div>
+                                <span>Rich Text</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompText">
+                                <div><i class="fas fa-font"></i></div>
+                                <span>Text</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompTextArea">
+                                <div><i class="fas fa-comment-alt"></i></div>
+                                <span>Text Area</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompTime">
+                                <div><i class="fas fa-clock"></i></div>
+                                <span>Time of Day</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompUrl">
+                                <div><i class="fab fa-internet-explorer"></i></div>
+                                <span>URL</span>
                             </div>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -65,7 +113,7 @@
             <div class="nc-bold nc-pn-hdr">Preview</div>
             <div class="nc-flex-col nc-ws-diag">
                 <div class="nc-diag-sec nc-diag-btns">
-                    <div class="hdr">
+                    <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                         <div class="title">
                             <span>Buttons</span>
                         </div>
@@ -82,15 +130,15 @@
                     </div>
                 </div>
                 <div class="nc-diag-sec nc-diag-grps">
-                    <div class="hdr">
+                    <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                         <div class="title">
                             <span>Field Groups</span>
                         </div>
-                        <button type="button">Add Field Group</button>
+                        <button type="button" id="btnAddGrp">Add Field Group</button>
                     </div>
-                    <div class="con">
+                    <div class="con nc-flex-col">
                         <div class="nc-grp">
-                            <div class="hdr">
+                            <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                                 <span>Avengers</span>
                                 <div class="hdr-actions nc-flex-row">
                                     <div class="btn-rem-grp">Collapse</div>
