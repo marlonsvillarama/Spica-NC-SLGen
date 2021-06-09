@@ -1,182 +1,208 @@
+<link rel="stylesheet" href="style.css">
 <style>
     {{__styles__}}
 </style>
 <div class="nc-wrapper">
-    <div class="nc-topbar">
-        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Name your Suitelet">
-        <button>SAVE & BUILD</button>
+    <div class="nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb nc-topbar">
+        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Enter a name for your Suitelet">
+        <button class="nc-bold">SAVE & BUILD</button>
     </div>
-    <div class="nc-main">
-
-    </div>
-    <div class="nc-sb">
-        <div class="nc-sb-hdr">Suitelet Generator</div>
-        <div class="nc-sb-con">
-            <div class="nc-sb-components">
-                <div class="nc-comp-grp">
-                    <div class="nc-comp-grp-hdr">Containers</div>
-                    <div class="nc-comp-grp-items">
-                        <div class="nc-comp-grp-item">Field Group</div>
-                        <div class="nc-comp-grp-item">Tab</div>
-                    </div>
-                </div>
-                <div class="nc-comp-grp">
-                    <div class="nc-comp-grp-hdr">Fields</div>
-                    <div class="nc-comp-grp-items">
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCB">Checkbox</div>
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompCurr">Currency</div>
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompDoc">Document</div>
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompText">Free-Form Text</div>
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompList">List/Record</div>
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompLongText">Long Text</div>
-                        <div draggable="true" class="nc-comp-grp-item nc-comp-draggable" id="ncCompMulti">Multi-select</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="nc-ws">
-        <div class="ns-ws-hdr">
-            <input type="text" name="slName" id="slName" class="sl-name" placeholder="Name your Suitelet">
-            <button>SAVE & BUILD</button>
-        </div>
-        <div class="nc-ws-diag">
-            <div class="nc-diag-sec nc-diag-btns">
-                <div class="hdr">
-                    <div class="title">
-                        <span>Buttons</span>
-                    </div>
-                    <button type="button">New Button</button>
-                </div>
-                <div class="con">
-                    <div class="nc-btn nc-btn-def">Submit</div>
-                    <div class="nc-btn">Apply Filters</div>
-                    <div class="nc-btn">Download Files</div>
-                    <div class="nc-btn">File Case</div>
-                    <div class="nc-btn">File Case</div>
-                    <div class="nc-btn">File Case</div>
-                    <div class="nc-btn">File Case</div>
-                </div>
-            </div>
-            <div class="nc-diag-sec nc-diag-grps">
-                <div class="hdr">
-                    <div class="title">
-                        <span>Field Groups</span>
-                    </div>
-                    <button type="button">Add Field Group</button>
-                </div>
-                <div class="con">
-                    <div class="nc-grp">
-                        <div class="hdr">
-                            <span>Avengers</span>
-                            <div class="hdr-actions">
-                                <div class="btn-rem-grp">Remove</div>
+    <div class="nc-flex-row nc-flex-jc-sb nc-main">
+        <div class="nc-flex-col nc-sb">
+            <div class="nc-bold nc-pn-hdr">Components</div>
+            <div class="nc-sb-con">
+                <div class="nc-sb-components">
+                    <div class="nc-comp-grp">
+                        <div class="nc-comp-grp-hdr">Containers</div>
+                        <div class="nc-comp-grp-items">
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompGrp">
+                                <div><i class="fas fa-object-group"></i></div>
+                                <span>Field Group</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompTab">
+                                <div><i class="fas fa-tag"></i></div>
+                                <span>Subtab</span>
                             </div>
                         </div>
-                        <div class="con layout-grp" id="ncLayGrp_111">
-                            <div class="layout-col nc-flex-col" id="ncLayCol_111_1">
-                                <!-- <div class="nc-fld nc-fld-text">
-                                    <label>First Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-list">
-                                    <label>Last Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-ltext">
-                                    <label>Email Name</label>
-                                    <div>&nbsp;</div>
-                                </div> -->
-                            </div>
-                            <div class="layout-col nc-flex-col" id="ncLayCol_111_2">
-                                <!-- <div class="nc-fld nc-fld-phone">
-                                    <label>Phone No.</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-cb">
-                                    <label>Is Active</label>
-                                    <div>&nbsp;</div>
-                                </div> -->
-                            </div>
-                            <!-- <div>
-                                <div class="nc-fld nc-fld-text">
-                                    <label>First Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-list">
-                                    <label>Last Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-ltext">
-                                    <label>Email Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="nc-fld nc-fld-phone">
-                                    <label>Phone No.</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-cb">
-                                    <label>Is Active</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                            </div> -->
-                        </div>
                     </div>
-                    <div class="nc-grp">
-                        <div class="hdr">
-                            <span>X-Men</span>
-                            <div class="hdr-actions">
-                                <div class="btn-rem-grp">Remove</div>
-                                <!-- <div>Default</div>
-                                <div>2 columns</div>
-                                <div>1 column</div> -->
+                    <div class="nc-comp-grp">
+                        <div class="nc-comp-grp-hdr">Fields</div>
+                        <div class="nc-comp-grp-items">
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompCB">
+                                <div><i class="fas fa-check"></i></div>
+                                <span>Checkbox</span>
                             </div>
-                        </div>
-                        <div class="con layout-grp" id="ncLayGrp_222">
-                            <div class="layout-col nc-flex-col" id="ncLayCol_222_1">
-                                <!-- <div class="nc-fld nc-fld-text">
-                                    <label>First Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-list">
-                                    <label>Last Name</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-ltext">
-                                    <label>Email Name</label>
-                                    <div>&nbsp;</div>
-                                </div> -->
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompCurr">
+                                <div><i class="fas fa-dollar-sign"></i></div>
+                                <span>Currency</span>
                             </div>
-                            <div class="layout-col nc-flex-col" id="ncLayCol_222_2">
-                                <!-- <div class="nc-fld nc-fld-phone">
-                                    <label>Phone No.</label>
-                                    <div>&nbsp;</div>
-                                </div>
-                                <div class="nc-fld nc-fld-cb">
-                                    <label>Is Active</label>
-                                    <div>&nbsp;</div>
-                                </div> -->
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompDoc">
+                                <div><i class="fas fa-file-alt"></i></div>
+                                <span>Document</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompText">
+                                <div><i class="fas fa-font"></i></div>
+                                <span>Free-Form Text</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompList">
+                                <div><i class="fas fa-caret-square-down"></i></div>
+                                <span>List/Record</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompLongText">
+                                <div><i class="fas fa-align-left"></i></div>
+                                <span>Long Text</span>
+                            </div>
+                            <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompMulti">
+                                <div><i class="fas fa-stream"></i></div>
+                                <span>Multi-select</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="nc-diag-tabs">
-                <div class="hdr">
-                    <label for="nc-buttons">Subtabs</label>
+        </div>
+        <div class="nc-flex-col nc-ws">
+            <div class="nc-bold nc-pn-hdr">Preview</div>
+            <div class="nc-flex-col nc-ws-diag">
+                <div class="nc-diag-sec nc-diag-btns">
+                    <div class="hdr">
+                        <div class="title">
+                            <span>Buttons</span>
+                        </div>
+                        <button type="button">New Button</button>
+                    </div>
+                    <div class="con">
+                        <div class="nc-btn nc-btn-def">Submit</div>
+                        <div class="nc-btn">Apply Filters</div>
+                        <div class="nc-btn">Download Files</div>
+                        <div class="nc-btn">File Case</div>
+                        <div class="nc-btn">File Case</div>
+                        <div class="nc-btn">File Case</div>
+                        <div class="nc-btn">File Case</div>
+                    </div>
                 </div>
-                <div class="con">
-                    <div class="nc-btn nc-btn-def">Submit</div>
-                    <div class="nc-btn">Apply Filters</div>
-                    <div class="nc-btn">Download Files</div>
-                    <div class="nc-btn">File Case</div>
+                <div class="nc-diag-sec nc-diag-grps">
+                    <div class="hdr">
+                        <div class="title">
+                            <span>Field Groups</span>
+                        </div>
+                        <button type="button">Add Field Group</button>
+                    </div>
+                    <div class="con">
+                        <div class="nc-grp">
+                            <div class="hdr">
+                                <span>Avengers</span>
+                                <div class="hdr-actions nc-flex-row">
+                                    <div class="btn-rem-grp">Collapse</div>
+                                    <div class="btn-rem-grp">Remove</div>
+                                </div>
+                            </div>
+                            <div class="con layout-grp" id="ncLayGrp_111">
+                                <div class="layout-col nc-flex-col" id="ncLayCol_111_1">
+                                    <!-- <div class="nc-fld nc-fld-text">
+                                        <label>First Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-list">
+                                        <label>Last Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-ltext">
+                                        <label>Email Name</label>
+                                        <div>&nbsp;</div>
+                                    </div> -->
+                                </div>
+                                <div class="layout-col nc-flex-col" id="ncLayCol_111_2">
+                                    <!-- <div class="nc-fld nc-fld-phone">
+                                        <label>Phone No.</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-cb">
+                                        <label>Is Active</label>
+                                        <div>&nbsp;</div>
+                                    </div> -->
+                                </div>
+                                <!-- <div>
+                                    <div class="nc-fld nc-fld-text">
+                                        <label>First Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-list">
+                                        <label>Last Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-ltext">
+                                        <label>Email Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="nc-fld nc-fld-phone">
+                                        <label>Phone No.</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-cb">
+                                        <label>Is Active</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="nc-grp">
+                            <div class="hdr">
+                                <span>X-Men</span>
+                                <div class="hdr-actions">
+                                    <div class="btn-rem-grp">Remove</div>
+                                    <!-- <div>Default</div>
+                                    <div>2 columns</div>
+                                    <div>1 column</div> -->
+                                </div>
+                            </div>
+                            <div class="con layout-grp" id="ncLayGrp_222">
+                                <div class="layout-col nc-flex-col" id="ncLayCol_222_1">
+                                    <!-- <div class="nc-fld nc-fld-text">
+                                        <label>First Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-list">
+                                        <label>Last Name</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-ltext">
+                                        <label>Email Name</label>
+                                        <div>&nbsp;</div>
+                                    </div> -->
+                                </div>
+                                <div class="layout-col nc-flex-col" id="ncLayCol_222_2">
+                                    <!-- <div class="nc-fld nc-fld-phone">
+                                        <label>Phone No.</label>
+                                        <div>&nbsp;</div>
+                                    </div>
+                                    <div class="nc-fld nc-fld-cb">
+                                        <label>Is Active</label>
+                                        <div>&nbsp;</div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div> -->
+                <!-- <div class="nc-diag-tabs">
+                    <div class="hdr">
+                        <label for="nc-buttons">Subtabs</label>
+                    </div>
+                    <div class="con">
+                        <div class="nc-btn nc-btn-def">Submit</div>
+                        <div class="nc-btn">Apply Filters</div>
+                        <div class="nc-btn">Download Files</div>
+                        <div class="nc-btn">File Case</div>
+                    </div>
+                </div> -->
+            </div>
         </div>
     </div>
 </div>
+<script src="https://kit.fontawesome.com/f3f8ec7cde.js" crossorigin="anonymous"></script>
 <script language="javascript">
     {{__scripts__}}
 </script>

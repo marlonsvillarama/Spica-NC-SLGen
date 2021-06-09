@@ -60,7 +60,7 @@
                     return;
                 }
                 else {
-                    elName = prompt('Enter the field label', dragEl.innerHTML);
+                    elName = prompt('Enter the field label', dragEl.getElementsByTagName('span')[0].innerHTML);
                 }
             }
     
