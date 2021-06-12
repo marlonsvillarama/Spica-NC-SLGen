@@ -43,6 +43,7 @@
 
     --fld-brdr: #CFD8DC;
     --fld-brdr-hov: #FFA726;
+    --fld-text: #999999;
 }
 body {
     box-sizing: border-box;
@@ -180,8 +181,8 @@ body {
 }
 .nc-diag-sec {
     border-bottom: 2px dashed var(--diag-sec-brdr);
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     gap: 0.5em;
 }
 .nc-diag-sec > .hdr {
@@ -190,6 +191,7 @@ body {
     justify-content: space-between;
     align-items: center; */
     /* gap: 1.25em; */
+    padding: 0;
     background-color: var(--hdr-bg);
     color: #FFFFFF;
     font-size: 0.875em;
@@ -312,17 +314,22 @@ body {
 
 
 /* BUTTONS */
-.nc-diag-sec > .hdr {
+/* .nc-diag-sec > .hdr {
     padding: 0;
-}
-.nc-diag-sec > .con {
+} */
+/* .nc-diag-sec > .con {
     padding: 1em 1.25em 1.5em;
     font-size: 0.875em;
-    /* font-weight: bold; */
+    font-weight: bold;
     display: flex;
     flex-direction: row;
     gap: 1em;
     overflow-x: auto;
+} */
+.nc-diag-btns > .con {
+    padding: 1em 1.25em 1.5em;
+    overflow-x: auto;
+    gap: 1em;
 }
 
 
@@ -330,8 +337,9 @@ body {
 .nc-diag-grps > .con {
     /* display: flex;
     flex-direction: column; */
-    gap: 0.25em;
-    padding: 0 1.5em;
+    gap: 1em;
+    /* padding: 0 1.5em; */
+    padding: 1em 1.25em 1.5em;
 }
 .nc-grp {
     border: 1px solid var(--diag-sec-bord);
@@ -389,4 +397,66 @@ body {
     margin-top: 0.25em;
     border: 1px solid var(--fld-brdr);
     width: 20em;
+    padding: 0.125em 0.25em;
+    color: var(--fld-text);
+}
+
+/* FIELD TYPES */
+.nc-fld-type-longtext,
+.nc-fld-type-multi,
+.nc-fld-type-richtext,
+.nc-fld-type-textarea {
+    /* padding: 0.125em 0.25em; */
+    height: 5em;
+}
+
+.nc-fld-type-date,
+.nc-fld-type-datetime,
+.nc-fld-type-file,
+.nc-fld-type-img,
+.nc-fld-type-pwd,
+.nc-fld-type-list,
+.nc-fld-type-text,
+.nc-fld-type-time,
+.nc-fld-type-url {
+    /* padding: 0.125em 0.25em; */
+}
+
+.nc-fld-type-curr,
+.nc-fld-type-flt,
+.nc-fld-type-int,
+.nc-fld-type-pct,
+.nc-fld-type-phone {
+    /* padding: 0.125em 0.25em; */
+    text-align: end;
+}
+
+
+/* MODAL */
+.nc-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 6.25em;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+/* The Close Button */
+.nc-modal > .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.nc-modal > .close:hover,
+.nc-modal > .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }

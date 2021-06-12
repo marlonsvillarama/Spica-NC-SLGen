@@ -112,14 +112,14 @@
         <div class="nc-flex-col nc-ws">
             <div class="nc-bold nc-pn-hdr">Preview</div>
             <div class="nc-flex-col nc-ws-diag">
-                <div class="nc-diag-sec nc-diag-btns">
+                <div class="nc-diag-sec nc-diag-btns nc-flex-col">
                     <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                         <div class="title">
                             <span>Buttons</span>
                         </div>
-                        <button type="button">New Button</button>
+                        <button type="button" id="btnAddBtn">Add Button</button>
                     </div>
-                    <div class="con">
+                    <div class="con nc-flex-row nc-flex-ai-ctr">
                         <div class="nc-btn nc-btn-def">Submit</div>
                         <div class="nc-btn">Apply Filters</div>
                         <div class="nc-btn">Download Files</div>
@@ -129,7 +129,7 @@
                         <div class="nc-btn">File Case</div>
                     </div>
                 </div>
-                <div class="nc-diag-sec nc-diag-grps">
+                <div class="nc-diag-sec nc-diag-grps nc-flex-col">
                     <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                         <div class="title">
                             <span>Field Groups</span>
@@ -248,6 +248,13 @@
                 </div> -->
             </div>
         </div>
+    </div>
+</div>
+<div class="nc-modal nc-fld-prop" id="modFld">
+    <div class="hdr">Field Properties</div>
+    <span class="close">&times;</span>
+    <div class="con">
+        <input type="text" name="elName" id="elName">
     </div>
 </div>
 <script src="https://kit.fontawesome.com/f3f8ec7cde.js" crossorigin="anonymous"></script>

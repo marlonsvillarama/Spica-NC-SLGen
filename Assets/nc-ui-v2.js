@@ -1,6 +1,7 @@
 (function() {
     console.log('hi guys');
     var jq = jQuery;
+    var doc = document || {};
 
     function onDragStart(e) {
         console.log('onDragStart id = ' + e.target.id);
@@ -43,35 +44,102 @@
         return stype;
     }
 
+    function parseDate(dt, time) {
+        var str = '';
+        str = dt.getDate().toString() + '/';
+        str += (dt.getMonth() + 1).toString() + '/';
+        str += dt.getFullYear();
+
+        if (time) {
+            str += ' ';
+            str += (dt.getHours() + 1).toString() + ':';
+            str += (dt.getMinutes()).toString();
+        }
+        return str;
+    }
+
+    function getElContent(type) {
+        var str = 'Text';
+        var num = 123.45;
+        var dt = new Date();
+
+        switch (type) {
+            case 'curr':
+            case 'flt': {
+                str = parseFloat(num).toString();
+                break;
+            }
+            case 'date': {
+                str = parseDate(dt);
+                break;
+            }
+            case 'datetime': {
+                str = parseDate(dt, true);
+                break;
+            }
+            case 'file': {
+                str = 'File_Name.txt';
+                break;
+            }
+            case 'int': {
+                str = parseInt(num).toString();
+                break;
+            }
+            case 'pwd': {
+                str = '******';
+                break;
+            }
+            case 'url': {
+                str = 'http://url.com';
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return str;
+    }
+    
     function onDrop(e) {
         var id = e.dataTransfer.getData('text/html');
-        var dragEl = document.getElementById(id);
-        console.log(dragEl);
+        var dragEl = doc.getElementById(id);
         var idEl = dragEl.id;
+        var elType = '';
+        console.log(idEl);
 
         console.log('dropping ' + dragEl.id);
         if (idEl.indexOf('ncComp') >= 0) {
             e.preventDefault();
-            dragEl = document.getElementById(id).cloneNode(true);
 
-            elName = '';
-            while(!elName) {
+            dragEl = doc.getElementById(id).cloneNode(true);
+            elName = dragEl.getElementsByTagName('span')[0].innerHTML;
+            elType = idEl.substring('ncComp'.length).toLowerCase();
+            /* while(!elName) {
                 if (elName == null || elName == undefined) {
                     return;
                 }
                 else {
-                    elName = prompt('Enter the field label', dragEl.getElementsByTagName('span')[0].innerHTML);
+                    console.log('doing action...');
+                    elName == 'ok';
+                    // elName = prompt('Enter the field label', dragEl.getElementsByTagName('span')[0].innerHTML);
+                    var modal = doc.getElementById('modFld');
+                    var modClose = modal.getElementsByClassName('close')[0];
+                    modal.style.display = 'block';
+                    // modClose.removeEventListener('click')
+                    modClose.addEventListener('click', function(e) {
+                        modal.style.display = 'none';
+                    });
                 }
-            }
+            } */
     
-            var elFld = document.createElement('div');
+            var elFld = doc.createElement('div');
             elFld.setAttribute('class', 'nc-fld nc-fld-text');
             elFld.setAttribute('draggable', 'true');
             elFld.setAttribute('id', 'ncEl_' + getTS());
-            elFld.innerHTML = '<label>' + elName.toUpperCase() + '</label><div>&nbsp;</div>';
+            elFld.innerHTML = '<label>' + elName.toUpperCase() + '</label><div class="nc-fld-type-' + elType + '">' + getElContent(elType) + '</div>';
         }
         else if (idEl.indexOf('ncEl') >= 0) {
-            dragEl = document.getElementById(id);
+            dragEl = doc.getElementById(id);
 
         }
 
@@ -84,7 +152,7 @@
         var i, j, n;
 
         // Init draggable components
-        var dragEls = document.getElementsByClassName('nc-comp-draggable');
+        var dragEls = doc.getElementsByClassName('nc-comp-draggable');
         console.log(dragEls.length);
         for (i=0, n=dragEls.length; i<n; i++) {
             dragEls[i].addEventListener('dragstart', function(e) {
@@ -93,7 +161,7 @@
         }
 
         // Init droppable components
-        var dropEls = document.getElementsByClassName('layout-col');
+        var dropEls = doc.getElementsByClassName('layout-col');
         console.log('droppables = ' + dropEls.length);
         for (i=0, n=dropEls.length; i<n; i++) {
             dropEls[i].addEventListener('dragover', function(e) {
@@ -108,7 +176,13 @@
     }
 
     function initControls() {
-        var btnAddGrp = document.getElementById('btnAddGrp');
+        var btnAddBtn = doc.getElementById('btnAddBtn');
+        btnAddBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('adding button');
+        });
+
+        var btnAddGrp = doc.getElementById('btnAddGrp');
         btnAddGrp.addEventListener('click', function(e) {
             alert('adding field group');
         });
