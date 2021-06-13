@@ -89,11 +89,15 @@
         resetSLObj();
         for (var i=0, n=arrGrps.length; i<n; i++) {
             var elGrp = arrGrps[i];
+            var idArrGrp = elGrp.id.split('_');
             var elGrpHdr = elGrp.getElementsByClassName('hdr')[0].getElementsByTagName('span')[0];
             objSL.form.grps.push({
                 id: elGrp.id.substring('ncGrp_'.length),
                 lbl: elGrpHdr.innerHTML
             });
+
+            var elGrpCon = elGrp.getElementsByClassName('layout-col');
+            
         }
     }
     
