@@ -11,13 +11,26 @@
  */
 
 define(
-    [],
+    [
+        'N/log',
+        'N/search'
+    ],
 
-    function() {
+    function(
+        LOG,
+        SEARCH
+    ) {
         var PREFIX = 'PARSER-TYPES.';
         var UI_FIELD_TYPE = 'UI.FieldType.';
         var UI_REC_TYPE = 'RECORD.Type.';
         
+        var _elements = {
+            BUTTON: 'button',
+            DIV: 'div',
+            LABEL: 'label',
+            SPAN: 'span'
+        };
+
         var _fld_types = [
             {
                 "id": "",
@@ -939,20 +952,63 @@ define(
             }
         ];
         
+        function _getComponents() {
+            var LOG_TITLE = '_getComponents';
+            LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
+
+            var list = [];
+            var ss = SEARCH.create({
+                type: 'customrecord_nc_comp',
+                filters: [ ['isinactive', 'is', 'F' ] ],
+                columns: [
+                    'isinactive',
+                    'custrecord_nc_comp_name',
+                    'custrecord_nc_comp_lbl',
+                    'custrecord_nc_comp_icon'
+                ]
+            });
+            
+            var res = ss.run().getRange({ start: 0, end: 1000 });
+            LOG.debug({ title: LOG_TITLE, details: 'res.length = ' + res.length });
+
+            for(var i=0, n=res.length; i<n; i++) {
+                list.push({
+                    "name": res[i].getValue({ name: 'custrecord_nc_comp_name' }),
+                    "lbl": res[i].getValue({ name: 'custrecord_nc_comp_lbl' }),
+                    "icon": res[i].getValue({ name: 'custrecord_nc_comp_icon' })
+                });
+            }
+            
+            LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
+            return list;
+        }
+
         function _getRecordTypes(version) {
+            var LOG_TITLE = '_getRecordTypes';
+            LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
+
+            var res = [];
             switch(version) {
                 case '1.0': {
-                    return _rec_types;
+                    res = _rec_types;
                     break;
                 }
                 case '2.0': {
-                    return _rec_types_2_0;
+                    res = _rec_types_2_0;
+                    break;
+                }
+                default: {
                     break;
                 }
             }
+
+            LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
+            return res;
         }
         
         return {
+            COMPONENTS: _getComponents,
+            ELEMENTS: _elements,
             FIELD_TYPES: _fld_types,
             RECORD_TYPES: _getRecordTypes
         }

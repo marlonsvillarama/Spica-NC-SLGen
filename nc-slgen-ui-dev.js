@@ -184,6 +184,8 @@
             var globals = {
                 url: resolveUrls(),
                 user: RUNTIME.getCurrentUser().id,
+                components: TYPES.COMPONENTS(),
+                elements: TYPES.ELEMENTS,
                 fieldTypes: TYPES.FIELD_TYPES,
                 recTypes: TYPES.RECORD_TYPES('2.0'),
             };
