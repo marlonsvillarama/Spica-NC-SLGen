@@ -46,7 +46,7 @@
     //#endregion
     
     //#region Script Object Functions
-    function getObjIndex(arr, key, val) {
+    /* function getObjIndex(arr, key, val) {
         console.log('** getObjIndex **');
         var k = -1;
         for (var i=0, n=arr.length; i<n; i++) {
@@ -68,7 +68,7 @@
         }
 
         return k;
-    }
+    } */
 
     function resetSLObj() {
         objSL = {
@@ -83,26 +83,51 @@
     }
 
     function updateSLObj() {
+        console.log('...updating SL object...');
         var elGrps = doc.getElementById('ncGroups');
         var arrGrps = elGrps.getElementsByClassName('nc-grp');
 
         resetSLObj();
-        for (var i=0, n=arrGrps.length; i<n; i++) {
+        for (var i=0, ilen=arrGrps.length; i<ilen; i++) {
+            console.log('looping arrGrps i = ' + i);
             var elGrp = arrGrps[i];
-            var idArrGrp = elGrp.id.split('_');
+            // var idGrpArr = elGrp.id.split('_');
             var elGrpHdr = elGrp.getElementsByClassName('hdr')[0].getElementsByTagName('span')[0];
+
             objSL.form.grps.push({
                 id: elGrp.id.substring('ncGrp_'.length),
                 lbl: elGrpHdr.innerHTML
             });
 
-            var elGrpCon = elGrp.getElementsByClassName('layout-col');
-            
+            var elGrpCols = elGrp.getElementsByClassName('layout-col');
+            for (var j=0, jlen=elGrpCols.length; j<jlen; j++) {
+                console.log('looping elGrpCols j = ' + j);
+                var idCol = elGrpCols[j].id;
+                var idColArr = idCol.split('_');
+
+                var elColFlds = elGrpCols[j].getElementsByClassName('nc-fld');
+                for (var k=0, klen=elColFlds.length; k<klen; k++) {
+                    console.log('looping elColFlds k = ' + k);
+                    // console.log(elColFlds[k]);
+                    var idFld = elColFlds[k].id;
+                    var idFldArr = idFld.split('_');
+
+                    objSL.form.flds.push({
+                        col: idColArr[2],
+                        container: idColArr[1],
+                        id: idFldArr[2],
+                        lbl: elColFlds[k].getElementsByTagName('label')[0].innerHTML,
+                        src: "",
+                        type: idFldArr[1]
+                    });
+                }
+            }
         }
+        console.log(objSL);
     }
     
     // NOT NEEDED
-    function buildCompParams(params) {
+    /* function buildCompParams(params) {
         var objParams = {
             'type': params.type,
             'class': params.cls.join(' ')
@@ -119,7 +144,7 @@
         }
         
         return objParams;
-    }
+    } */
     //#endregion
 
     //#region Helper Functions
@@ -249,7 +274,7 @@
                     // }
                     
                     // idRem = gid.substring(gid.indexOf('_'));
-                    var k = getObjIndex(objSL.form.grps, 'id', params.id);
+                    // var k = getObjIndex(objSL.form.grps, 'id', params.id);
                     // var k = getObjIndex(objSL.form.grps, 'id', idRem);
                     // for (var i=0, n=objSL.form.grps.length; i<n; i++) {
                         // var og = objSL.form.grps[i];
@@ -261,29 +286,31 @@
                         // }
                     // }
                     
-                    if (k >= 0) {
-                        console.log('removing group');
-                        objSL.form.grps.splice(k, 1);
-                    }
-                    console.log(objSL);
+                    // if (k >= 0) {
+                    //     console.log('removing group');
+                    //     objSL.form.grps.splice(k, 1);
+                    // }
+                    // console.log(objSL);
                     
                     // console.log('to remove = #gdiv' + idRem);
                     // jq('#gdiv' + idRem).remove();
                     
                     // Also remove all fields from the Suitelet Object
-                    if (objSL.form.flds) {
-                        for (i=objSL.form.flds.length - 1; i>=0; i--) {
-                            if (objSL.form.flds[i].container == idRem) {
-                                objSL.form.flds.splice(i, 1);
-                            }
-                        }
-                    }
+                    // if (objSL.form.flds) {
+                    //     for (i=objSL.form.flds.length - 1; i>=0; i--) {
+                    //         if (objSL.form.flds[i].container == idRem) {
+                    //             objSL.form.flds.splice(i, 1);
+                    //         }
+                    //     }
+                    // }
                 }
                 default: {
                     break;
                 }
             }
         }
+        updateSLObj();
+        // console.log(objSL);
     }
 
     // IN PROGRESS
@@ -443,7 +470,7 @@
         //#endregion
         
         //#region Add group to Suitelet Object
-        console.log('Adding group ' + idNew + ' to SL object');
+        // console.log('Adding group ' + idNew + ' to SL object');
         updateSLObj();
         /* if (!objSL.form.grps) {
             objSL.form.grps = [];
@@ -462,7 +489,7 @@
             });
         } */
         
-        console.log(objSL);
+        // console.log(objSL);
         //#endregion
     }
     //#endregion
@@ -578,7 +605,7 @@
             //#endregion
 
             //#region Update Suitelet Object
-            updateSLObj();
+            // updateSLObj();
             /* if (!objSL.form.flds) {
                 objSL.form.flds = [];
             }
@@ -592,7 +619,7 @@
                 col: idArrCol[2]
             }); */
         
-            console.log(objSL);
+            // console.log(objSL);
             //#endregion
 
             //#region TO_DELETE
@@ -659,6 +686,202 @@
         updateSLObj();
         e.dataTransfer.clearData();
     }
+
+    function toggleBtn(btn, cls, isOn) {
+        var clsDisabled = cls + '-disabled';
+        if (btn.classList.contains(clsDisabled) == (isOn) ? true : false) {
+            btn.classList.remove(cls);
+            btn.classList.remove(clsDisabled);
+        }
+    }
+
+    function build(e) {
+        e.preventDefault();
+        console.log('BUILDING SUITELET...');
+        console.log(objSL);
+        
+        if (validateForm() == false) {
+            return;
+        }
+        
+        // Save Suitelet content into file
+        objSL.id = rid;
+        var reqData = {
+            type: 'save',
+            content: JSON.stringify(objSL)
+        };
+        
+        var btn = e.target;
+        console.log(btn);
+        btn.innerHTML = 'Building Suitelet...';
+        toggleBtn(btn, 'nc-btn-build');
+        /* if (btn.classList.contains('nc-btn-build-disabled') == false) {
+            btn.classList.remove('nc-btn-build')
+            btn.classList.add('nc-btn-build-disabled');
+        } */
+        /* var $btn = jq('#ui-btn-build');
+        $btn.text('Building ...');
+        if ($btn.hasClass('ui-btn-def')) {
+            $btn.removeClass('ui-btn-def');
+            $btn.addClass('ui-btn-disabled');
+        }
+        // jq('#ui-sl-url').href('').text('... building ...');
+        
+        jq.ajax({
+            url: globals.url.backend,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(reqData)
+        })
+        .done(function(data) {
+            console.log(data);
+            objResp = data;
+            
+            if (data.error) {
+                console.log(data.error);
+                alert(data.error);
+                $btn.text(btnBuildTxt);
+                return;
+            }
+            else {
+                rid = objResp.id;
+                objSL.id = rid;
+                objSL.file = objResp.file;
+                console.log(objSL);
+            }
+            
+            var fname = objSL.file.name;
+            var sname = '[AUTO] SL' + fname;
+            var scrData = {
+                'submitter': 'Save and Deploy',
+                'scripttype': 'SCRIPTLET',
+                'name': sname,
+                'scriptid': '_' + fname.toLowerCase(),
+                'apiversion': '2.0',
+                'description': 'Auto-generated Suitelet on ' + fname,
+                '_multibtnstate_': 'EDIT_SCRIPT:submitter:submitdeploy',
+                'owner': globals.user,
+                'type': 'script',
+                'id': objSL.script.id,
+                'scriptfile': objSL.file.id
+            };
+            
+            jq.ajax({
+                url: globals.url.script,
+                type: 'POST',
+                data: scrData
+            }).
+            done(function(sdata, status, sxhr) {
+                var s1 = sdata.substring(sdata.indexOf('copytoaccount.nl'));
+                var s2 = s1.substring(s1.indexOf('id=') + 3, s1.indexOf('"'));
+                console.log('s2 = ' + s2);
+                objSL.script.id = s2;
+                
+                if (sxhr.status != 200) {
+                    alert('An error has occurred');
+                    $btn.text(btnBuildTxt);
+                    return;
+                }
+                
+                if (objSL.deploy.id) {
+                    console.log('deployment exists... exiting now');
+                    
+                    $btn.text(btnBuildTxt);
+                    if ($btn.hasClass('ui-btn-disabled')) {
+                        $btn.removeClass('ui-btn-disabled');
+                        $btn.addClass('ui-btn-def');
+                    }
+                    
+                    return;
+                }
+                
+                $btn.text('Deploying...');
+                // If deployment does not exist, build the deployment
+                var depData = {
+                    'submitter': 'Save',
+                    'script': s2,
+                    'title': sname,
+                    'scriptid': '_' + fname.toLowerCase(),
+                    'isdeployed': 'T',
+                    'status': 'TESTING',
+                    'loglevel': 'DEBUG',
+                    'runasrole': 3,
+                    'type': 'scriptrecord',
+                    'id': (objSL.deploy.record || ''),
+                    'deploymentid': (objSL.deploy.id || '')
+                };
+                
+                jq.ajax({
+                    url: globals.url.deploy,
+                    type: 'POST',
+                    data: depData
+                }).
+                done(function(ddata, status, dxhr) {
+                    // console.log(ddata);
+                    
+                    if (dxhr.status != 200) {
+                        alert('An error has occurred');
+                        $btn.text(btnBuildTxt);
+                        return;
+                    }
+                    
+                    var sUrl = 'fldUrlWindow';
+                    var d1, d2;
+                    
+                    d1 = ddata.substring(ddata.indexOf('id="entryformquerystring"')+'id="entryformquerystring"'.length);
+                    d2 = d1.substring(d1.indexOf('value="id=')+'value="id='.length, d1.indexOf('">'));
+                    console.log('d2 = ' + d2);
+                    objSL.deploy.record = d2;
+                    
+                    d1 = ddata.substring(ddata.indexOf(sUrl)+sUrl.length+2);
+                    d2 = d1.substring(0,d1.indexOf('</a>'));
+                    console.log('d2 = ' + d2);
+                    objSL.deploy.url = d2;
+                    objSL.deploy.id = d2.substring(d2.indexOf('&deploy=')+'&deploy='.length);
+                    
+                    if (jq('#ui-sl-url').length > 0) {
+                        var $linkUrl = jq('#ui-sl-url');
+                        $linkUrl.attr('href', d2);
+                        $linkUrl.text(d2);
+                    }
+                    else {
+                        var $grpcontent = addGrpContent();
+                        // var $grpcontent = jq('<div>', {"class":"ui-fgrp-fcontent"});
+                        var $grp = jq('<div>', {"class":"ui-fgrp"});
+                        var $row, $fld;
+                        
+                        $row = addRow();
+                        // $row = jq('<div>', {"class":"ui-fgrp-row"});
+                        
+                        $fldset = addComponent('fldset');
+                        // $fldset = jq('<div>', {"class":"ui-fldset"});
+                        
+                        $fld = jq('<span>');
+                        $fld.text('Suitelet URL: ');
+                        $fldset.append($fld);
+                        
+                        $fld = jq('<a>', {"id":"ui-sl-url","href":d2,"target":"_blank"});
+                        $fld.text(d2);
+                        $fldset.append($fld);
+                        
+                        $row.append($fldset);
+                        
+                        $grpcontent.append($row);
+                        $grp.append($grpcontent);
+                        jq('#ui-url').append($grp);
+                    }
+                    
+                    console.log(objSL);
+                    
+                    $btn.text(btnBuildTxt);
+                    if ($btn.hasClass('ui-btn-disabled')) {
+                        $btn.removeClass('ui-btn-disabled');
+                        $btn.addClass('ui-btn-def');
+                    }
+                });
+            });
+        }); */
+    }
     //#endregion
 
     //#region INIT Functions
@@ -694,14 +917,16 @@
     }
 
     function initControls() {
-        var btnAddBtn = doc.getElementById('btnAddBtn');
-        btnAddBtn.addEventListener('click', function(e) {
+        doc.getElementById('btnBuild').addEventListener('click', function(e) {
+            build(e);
+        })
+
+        doc.getElementById('btnAddBtn').addEventListener('click', function(e) {
             e.preventDefault();
             alert('adding button');
         });
 
-        var btnAddGrp = doc.getElementById('btnAddGrp');
-        btnAddGrp.addEventListener('click', function(e) {
+        doc.getElementById('btnAddGrp').addEventListener('click', function(e) {
             addFldGrp();
         });
     }

@@ -103,16 +103,28 @@ body {
     /* border: 1px solid transparent !important; */
     border: 1px solid var(--sb-brdr) !important;
 }
-.nc-topbar button {
-    border: 1px solid var(--btn-def-brd);
+.nc-btn-build,
+.nc-btn-build-disabled {
+/* }
+.nc-topbar button { */
     border-radius: 3px;
+    padding: 0.375em 0.75em;
+}
+/* .nc-topbar button:hover { */
+.nc-btn-build {
+    border: 1px solid var(--btn-def-brd);
     background: linear-gradient(0deg, var(--btn-def-grad1), var(--btn-def-grad2));
     color: #FFFFFF;
-    padding: 0.375em 0.75em;
     cursor: pointer;
 }
-.nc-topbar button:hover {
+.nc-btn-build:hover {
     background: linear-gradient(0deg, var(--btn-def-grad1-hov), var(--btn-def-grad2-hov));
+}
+.nc-btn-build-disabled {
+    border: 1px solid var(--btn-brd);
+    background: linear-gradient(0deg, var(--btn-grad1), var(--btn-grad2));
+    color: #FFFFFF;
+    cursor: not-allowed;
 }
 
 
