@@ -6,7 +6,7 @@
 <div class="nc-wrapper">
     <div class="nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb nc-topbar">
         <input type="text" name="slName" id="slName" class="sl-name" placeholder="Enter a name for your Suitelet here...">
-        <button class="nc-bold nc-btn-build" id="btnBuild">SAVE & BUILD</button>
+        <button type="button" class="nc-bold nc-btn-def" id="btnBuild">SAVE & BUILD</button>
     </div>
     <div class="nc-flex-row nc-flex-jc-sb nc-main">
         <div class="nc-flex-col nc-sb">
@@ -121,7 +121,20 @@
                         </div>
                         <button type="button" id="btnAddGrp">Add Field Group</button>
                     </div>
-                    <div class="con nc-flex-col" id="ncGroups"></div>
+                    <div class="con nc-flex-col" id="ncGroups">
+                        <!-- <div class="nc-grp" id="ncGrp_1623975277215">
+                            <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
+                                <input type="text" value="dasdfkjh">
+                                <div class="hdr-actions nc-flex-row">
+                                    <div class="btn-grp-act">Remove</div>
+                                </div>
+                            </div>
+                            <div class="con layout-grp">
+                                <div class="layout-col nc-flex-col" id="ncGrpCol_1623975277215_1"></div>
+                                <div class="layout-col nc-flex-col" id="ncGrpCol_1623975277215_2"></div>
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
                 <!-- <div class="nc-diag-tabs">
                     <div class="hdr">
@@ -138,11 +151,35 @@
         </div>
     </div>
 </div>
-<div class="modal nc-fld-prop" id="modFld">
-    <div class="hdr">Field Properties</div>
-    <a href="#" rel="modal:close">&times;</a>
-    <div class="con">
-        <input type="text" name="elName" id="elName">
+<div class="nc-modal">
+    <div class="nc-fld-prop nc-modal-content">
+        <div class="hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
+            <span>Field Properties</span>
+            <!-- <a href="#" class="close">X</a> -->
+            <!-- <button type="button" class="close">Close</button> -->
+        </div>
+        <div class="con nc-flex-col">
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
+                <div class="cell-lbl"><label for="modalFldName">Field Name</label></div>
+                <div class="cell-con"><input type="text" name="modalFldName" id="modalFldName"></div>
+            </div>
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
+                <div class="cell-lbl"><label for="fldType">Type</label></div>
+                <div class="cell-con">
+                    <select name="elType" id="fldType">
+                        <option value="1">Text</option>
+                        <option value="2">Select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
+                <div class="cell-lbl"></div>
+                <div class="cell-con">
+                    <button type="button" class="nc-modal-btn-ok" id="btnModalOK">OK</button>
+                    <button type="button" class="nc-modal-btn-cancel" id="btnModalCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://kit.fontawesome.com/f3f8ec7cde.js" crossorigin="anonymous"></script>

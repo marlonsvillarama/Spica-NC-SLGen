@@ -6,18 +6,12 @@
     var rid = '';
     var objResp = {};
     var objSL = {};
-        /* form: {},
-        list: {},
-        script: {},
-        deploy: {}
-    }; */
     var CLASSES = {
         group: 'ui-fgrp',
         grptitle: 'ui-fgrp-title',
         content: 'ui-fgrp-fcontent',
         row: 'ui-fgrp-row',
         fldset: 'ui-fldset',
-        
         btn: 'ui-btn',
         btndef: 'ui-btn-def'
     };
@@ -92,11 +86,11 @@
             console.log('looping arrGrps i = ' + i);
             var elGrp = arrGrps[i];
             // var idGrpArr = elGrp.id.split('_');
-            var elGrpHdr = elGrp.getElementsByClassName('hdr')[0].getElementsByTagName('span')[0];
+            var elGrpHdr = elGrp.getElementsByClassName('hdr')[0].getElementsByTagName('input')[0];
 
             objSL.form.grps.push({
                 id: elGrp.id.substring('ncGrp_'.length),
-                lbl: elGrpHdr.innerHTML
+                lbl: elGrpHdr.value
             });
 
             var elGrpCols = elGrp.getElementsByClassName('layout-col');
@@ -230,15 +224,84 @@
         return el;
     }
 
+    //#region Modal Functions
+    function toggleModal() {
+        var modal = document.querySelector('.nc-modal');
+        modal.classList.toggle('show-modal');
+
+        if (modal.classList.contains('show-modal')) {
+            console.log('showing modal...');
+            // doc.getElementById('btnModalOK').addEventListener('click', function(e) {
+            //     modalFldBtnClk({ ok: true });
+            // });
+    
+            // doc.getElementById('btnModalCancel').addEventListener('click', function(e) {
+            //     modalFldBtnClk({ cancel: true });
+            // });
+        }
+        else {
+            console.log('hiding modal...');
+            // doc.getElementById('btnModalOK').removeEventListener('click', function(e) {
+            //     modalFldBtnClk({ ok: true });
+            // });
+            // doc.getElementById('btnModalCancel').removeEventListener('click', function(e) {
+            //     modalFldBtnClk({ cancel: true });
+            // });
+        }
+    }
+
+    function getModalFldEls() {
+        var modalFldName = document.getElementById('modalFldName');
+        if (!modalFldName) {
+            console.log('Cannot find modalFldName. Exiting...');
+            return null;
+        }
+        
+        return {
+            modalFldName: modalFldName
+        };
+    }
+
     function showEditFld(type, id) {
         console.log('showEditFld = ' + id);
+        toggleModal();
 
-        /* jq('#modFld').modal({
-            escapeClose: false,
-            clickClose: false,
-            showClose: false
-        }); */
+        var fldId = 'ncEl_' + type + '_' + id;
+        var fld = document.getElementById(fldId);
+        if (!fld) {
+            console.log('Cannot find ncEl_' + type + '_' + id + '. Exiting...');
+            return;
+        }
+
+        globals.fldEdit = fldId;
+        var modalEls = getModalFldEls();
+        var fldName = modalEls.modalFldName;
+        fldName.value = fld.getElementsByTagName('label')[0].innerHTML;
+        fldName.focus();
+        fldName.select();
     }
+
+    function modalFldBtnClk(params) {
+        if (params.ok) {
+            console.log('clicked ok');
+            var modalEls = getModalFldEls();
+            var fldName = modalEls.modalFldName;
+            console.log('field name = ' + fldName.value);
+
+
+        }
+        
+        if (params.cancel) {
+            console.log('clicked cancel');
+        }
+
+        toggleModal();
+    }
+
+    function modalFldCancel() {
+
+    }
+    //#endregion Modal Functions
 
     function removeEl(params) {
         console.log('removeEl = ' + params.type + '; ' + params.id + '; ' + params.subtype);
@@ -371,12 +434,12 @@
         var grpName = '';
         var elGrp, elDiv;
 
-        grpName = prompt('Enter the name of the Field Group');
-        if (!grpName) {
-            return;
-        }
+        // grpName = prompt('Enter the name of the Field Group');
+        // if (!grpName) {
+        //     return;
+        // }
 
-        idNew = getTS();
+        var idNew = getTS();
         console.log('grpName = ' + grpName + ', idNew = ' + idNew);
 
         //#region Create group HTML elements
@@ -398,8 +461,12 @@
         });
         elDiv.appendChild(
             createNewEl({
-                type: globals.elements.SPAN,
-                html: grpName
+                type: globals.elements.INPUT,
+                attr: {
+                    type: 'text',
+                    value: grpName,
+                    id: 'grpName_' + idNew
+                }
             })
         );
 
@@ -467,6 +534,7 @@
 
         elGrp.appendChild(elDiv);
         doc.getElementById('ncGroups').appendChild(elGrp);
+        doc.getElementById('grpName_' + idNew).focus({})
         //#endregion
         
         //#region Add group to Suitelet Object
@@ -514,7 +582,6 @@
 
         var dropCol = e.target.closest('.layout-col');
         console.log('dropping ' + dragEl.id);
-
 
         if (idEl.indexOf('ncComp') >= 0) {
             //#region Dropping component from sidebar
@@ -601,7 +668,9 @@
             elFld.appendChild(elFldDisp);
             dropCol.appendChild(elFld);
 
-            var idArrCol = dropCol.id.split('_');
+            showEditFld(elType, idNew);
+
+            // var idArrCol = dropCol.id.split('_');
             //#endregion
 
             //#region Update Suitelet Object
@@ -714,7 +783,7 @@
         var btn = e.target;
         console.log(btn);
         btn.innerHTML = 'Building Suitelet...';
-        toggleBtn(btn, 'nc-btn-build');
+        toggleBtn(btn, 'nc-btn-def');
         /* if (btn.classList.contains('nc-btn-build-disabled') == false) {
             btn.classList.remove('nc-btn-build')
             btn.classList.add('nc-btn-build-disabled');
@@ -929,6 +998,20 @@
         doc.getElementById('btnAddGrp').addEventListener('click', function(e) {
             addFldGrp();
         });
+
+        var modalBtns = doc.getElementsByClassName('nc-modal-btn-ok');
+        for (var i=0, n=modalBtns.length; i<n; i++) {
+            modalBtns[i].addEventListener('click', function(e) {
+                modalFldBtnClk({ ok: true });
+            });
+        }
+
+        modalBtns = doc.getElementsByClassName('nc-modal-btn-cancel');
+        for (i=0, n=modalBtns.length; i<n; i++) {
+            modalBtns[i].addEventListener('click', function(e) {
+                modalFldBtnClk({ cancel: true });
+            });
+        }
     }
 
     function initDnD() {

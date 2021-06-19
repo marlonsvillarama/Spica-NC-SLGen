@@ -27,6 +27,7 @@ define(
         var _elements = {
             BUTTON: 'button',
             DIV: 'div',
+            INPUT: 'input',
             LABEL: 'label',
             SPAN: 'span'
         };
