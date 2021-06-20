@@ -105,14 +105,16 @@
                     // console.log(elColFlds[k]);
                     var idFld = elColFlds[k].id;
                     var idFldArr = idFld.split('_');
+                    var elFld = doc.getElementById(idFld);
 
                     objSL.form.flds.push({
                         col: idColArr[2],
                         container: idColArr[1],
-                        id: idFldArr[2],
+                        id: idFldArr[1],
                         lbl: elColFlds[k].getElementsByTagName('label')[0].innerHTML,
-                        src: "",
-                        type: idFldArr[1]
+                        src: elFld.getAttribute('data-src'),
+                        type: elFld.getAttribute('data-type')
+                        // type: idFldArr[1]
                     });
                 }
             }
@@ -225,7 +227,7 @@
     }
 
     //#region Modal Functions
-    function toggleModal() {
+    function toggleModal(params) {
         var modal = document.querySelector('.nc-modal');
         modal.classList.toggle('show-modal');
 
@@ -248,28 +250,63 @@
             //     modalFldBtnClk({ cancel: true });
             // });
         }
+
+        if (params) {
+            if (params.fldid) {
+                var fldSrc = doc.getElementById('fldSrc');
+                if (!fldSrc) {
+                    return;
+                }
+                
+                var fldData = doc.getElementById('ncEl_' + params.fldid);
+                if (['list', 'multi'].indexOf(fldData.getAttribute('data-type')) >= 0) {
+                    if (fldSrc.classList.contains('nc-hidden') == true) {
+                        fldSrc.classList.remove('nc-hidden');
+                    }
+                }
+                else {
+                    if (fldSrc.classList.contains('nc-hidden') == false) {
+                        fldSrc.classList.add('nc-hidden');
+                    }
+                }
+            }
+        }
     }
 
     function getModalFldEls() {
-        var modalFldName = document.getElementById('modalFldName');
+        var modalFldName = doc.getElementById('modalFldName');
         if (!modalFldName) {
             console.log('Cannot find modalFldName. Exiting...');
-            return null;
+            // return null;
+        }
+
+        var modalFldSrc = doc.getElementById('modalFldSrc');
+        if (!modalFldSrc) {
+            console.log('Cannot find modalFldSrc. Exiting...');
+            // return {
+            //     modalFldName: modalFldName
+            // };
         }
         
         return {
-            modalFldName: modalFldName
+            modalFldName: modalFldName,
+            modalFldSrc: modalFldSrc
         };
     }
 
-    function showEditFld(type, id) {
+    // function showEditFld(type, id) {
+    function showEditFld(id) {
         console.log('showEditFld = ' + id);
-        toggleModal();
+        toggleModal({
+            fldid: id
+            // fldtype: type
+        });
 
-        var fldId = 'ncEl_' + type + '_' + id;
+        // var fldId = 'ncEl_' + type + '_' + id;
+        var fldId = 'ncEl_' + id;
         var fld = document.getElementById(fldId);
         if (!fld) {
-            console.log('Cannot find ncEl_' + type + '_' + id + '. Exiting...');
+            console.log('Cannot find ncEl_' + id + '. Exiting...');
             return;
         }
 
@@ -279,6 +316,15 @@
         fldName.value = fld.getElementsByTagName('label')[0].innerHTML;
         fldName.focus();
         fldName.select();
+
+        var fldSrc = modalEls.modalFldSrc;
+        var gfld = objSL.form.flds.filter(function (x) {
+            return x.id == id;
+        });
+
+        if (gfld.length > 0) {
+            fldSrc.value = gfld.src;
+        }
     }
 
     function modalFldBtnClk(params) {
@@ -286,9 +332,30 @@
             console.log('clicked ok');
             var modalEls = getModalFldEls();
             var fldName = modalEls.modalFldName;
-            console.log('field name = ' + fldName.value);
+            var fldSrc = modalEls.modalFldSrc;
+            // console.log('edited field = ' + globals.fldEdit);
+            
+            if (!globals.fldEdit) {
+                return;
+            }
+            
+            var fldEdit = doc.getElementById(globals.fldEdit);
 
+            if (['list', 'multi'].indexOf(fldEdit.getAttribute('data-type')) >= 0) {
+                fldEdit.setAttribute('data-src', fldSrc.value);
+            }
 
+            fldEdit.getElementsByTagName('label')[0].innerHTML = fldName.value.toUpperCase();
+            updateSLObj();
+            
+            /* var arrEditId = globals.fldEdit.split('_');
+            var gfld = globals.form.flds.filter(function (x) {
+                return x.id == arrEditId[2];
+            });
+
+            if (gfld.length > 0) {
+
+            } */
         }
         
         if (params.cancel) {
@@ -304,7 +371,7 @@
     //#endregion Modal Functions
 
     function removeEl(params) {
-        console.log('removeEl = ' + params.type + '; ' + params.id + '; ' + params.subtype);
+        console.log('removeEl = ' + params.type + '; ' + params.id);
 
         var isOk = (!params.isMove) ?
             confirm('Are you sure you want to delete this ' + params.type + '?') :
@@ -315,7 +382,7 @@
 
             switch(params.type) {
                 case 'field': {
-                    idEl = 'ncEl_' + params.subtype + '_' + params.id;
+                    idEl = 'ncEl_' + params.id;
                     console.log('idEl = ' + idEl);
                     el = doc.getElementById(idEl);
                     par = el.closest('.layout-col');
@@ -466,6 +533,11 @@
                     type: 'text',
                     value: grpName,
                     id: 'grpName_' + idNew
+                },
+                evs: {
+                    blur: function(e) {
+                        updateSLObj();
+                    }
                 }
             })
         );
@@ -598,7 +670,8 @@
                 attr: {
                     class: 'nc-fld nc-fld-text',
                     draggable: 'true',
-                    id: 'ncEl_' + elType + '_' + idNew
+                    id: 'ncEl_' + idNew,
+                    'data-type': elType
                 },
                 evs: {
                     dragstart: function(e) {
@@ -641,7 +714,7 @@
                     },
                     evs: {
                         click: function(e) {
-                            showEditFld(elType, idNew);
+                            showEditFld(idNew);
                         }
                     },
                     html: 'Edit'
@@ -668,7 +741,7 @@
             elFld.appendChild(elFldDisp);
             dropCol.appendChild(elFld);
 
-            showEditFld(elType, idNew);
+            showEditFld(idNew);
 
             // var idArrCol = dropCol.id.split('_');
             //#endregion
@@ -985,6 +1058,21 @@
         }
     }
 
+    function buildModal() {
+        var fldSrc, rt, str = '';
+
+        for (var i=0, n=globals.recTypes.length; i<n; i++) {
+            rt = globals.recTypes[i];
+            str += '<option value="' + rt.id + '">' + rt.text + '</option>';
+        }
+
+        fldSrc = doc.getElementById('modalFldSrc');
+        fldSrc.innerHTML = str;
+        fldSrc.addEventListener('change', function (e) {
+            console.log('changed fldSrc = ' + this.value);
+        });
+    }
+
     function initControls() {
         doc.getElementById('btnBuild').addEventListener('click', function(e) {
             build(e);
@@ -1031,6 +1119,7 @@
 
     //#region ENTRY
     buildComponents();
+    buildModal();
     initControls();
     initDnD();
     //#endregion

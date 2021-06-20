@@ -79,6 +79,9 @@ body {
 .brd-red {
     border: 1px solid red;
 }
+.nc-hidden {
+    display: none;
+}
 
 
 .nc-wrapper {

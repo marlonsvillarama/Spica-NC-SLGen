@@ -5,7 +5,7 @@
 </style>
 <div class="nc-wrapper">
     <div class="nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb nc-topbar">
-        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Enter a name for your Suitelet here...">
+        <input type="text" name="slName" id="slName" class="sl-name" placeholder="Type the name of your Suitelet here...">
         <button type="button" class="nc-bold nc-btn-def" id="btnBuild">SAVE & BUILD</button>
     </div>
     <div class="nc-flex-row nc-flex-jc-sb nc-main">
@@ -95,7 +95,13 @@
             </div>
         </div>
         <div class="nc-flex-col nc-ws">
-            <div class="nc-bold nc-pn-hdr">Preview</div>
+            <div class="nc-bold nc-pn-hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
+                <span>Preview</span>
+                <!-- <div>
+                    <a href="#">Add Field Group</a>
+                    <a href="#">Add Button</a>
+                </div> -->
+            </div>
             <div class="nc-flex-col nc-ws-diag">
                 <div class="nc-diag-sec nc-diag-btns nc-flex-col">
                     <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
@@ -152,7 +158,7 @@
     </div>
 </div>
 <div class="nc-modal">
-    <div class="nc-fld-prop nc-modal-content">
+    <div class="nc-fld-prop nc-modal-content nc-hidden" id="ncFldProp">
         <div class="hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
             <span>Field Properties</span>
             <!-- <a href="#" class="close">X</a> -->
@@ -163,20 +169,41 @@
                 <div class="cell-lbl"><label for="modalFldName">Field Name</label></div>
                 <div class="cell-con"><input type="text" name="modalFldName" id="modalFldName"></div>
             </div>
-            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
-                <div class="cell-lbl"><label for="fldType">Type</label></div>
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr fld-source nc-hidden" id="fldSrc">
+                <div class="cell-lbl"><label for="modalFldSrc">Source List</label></div>
                 <div class="cell-con">
-                    <select name="elType" id="fldType">
-                        <option value="1">Text</option>
-                        <option value="2">Select</option>
-                    </select>
+                    <select name="modalFldSrc" id="modalFldSrc"></select>
                 </div>
             </div>
             <div class="fld-row nc-flex-row nc-flex-ai-ctr">
                 <div class="cell-lbl"></div>
                 <div class="cell-con">
-                    <button type="button" class="nc-modal-btn-ok" id="btnModalOK">OK</button>
-                    <button type="button" class="nc-modal-btn-cancel" id="btnModalCancel">Cancel</button>
+                    <button type="button" class="nc-modal-btn-ok">OK</button>
+                    <button type="button" class="nc-modal-btn-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nc-btn-prop nc-modal-content nc-hidden" id="ncBtnProp">
+        <div class="hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
+            <span>Button Properties</span>
+        </div>
+        <div class="con nc-flex-col">
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
+                <div class="cell-lbl"><label for="modalBtnLbl">Button Label</label></div>
+                <div class="cell-con"><input type="text" name="modalBtnLbl" id="modalBtnLbl"></div>
+            </div>
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
+                <div class="cell-lbl"><label for="modalBtnIsDef">Is Default</label></div>
+                <div class="cell-con">
+                    <input type="checkbox" name="modalBtnIsDef" id="modalBtnIsDef">
+                </div>
+            </div>
+            <div class="fld-row nc-flex-row nc-flex-ai-ctr">
+                <div class="cell-lbl"></div>
+                <div class="cell-con">
+                    <button type="button" class="nc-modal-btn-ok">OK</button>
+                    <button type="button" class="nc-modal-btn-cancel">Cancel</button>
                 </div>
             </div>
         </div>
