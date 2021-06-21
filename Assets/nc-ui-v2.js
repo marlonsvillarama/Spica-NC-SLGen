@@ -83,7 +83,7 @@
 
         resetSLObj();
         for (var i=0, ilen=arrGrps.length; i<ilen; i++) {
-            console.log('looping arrGrps i = ' + i);
+            // console.log('looping arrGrps i = ' + i);
             var elGrp = arrGrps[i];
             // var idGrpArr = elGrp.id.split('_');
             var elGrpHdr = elGrp.getElementsByClassName('hdr')[0].getElementsByTagName('input')[0];
@@ -95,13 +95,13 @@
 
             var elGrpCols = elGrp.getElementsByClassName('layout-col');
             for (var j=0, jlen=elGrpCols.length; j<jlen; j++) {
-                console.log('looping elGrpCols j = ' + j);
+                // console.log('looping elGrpCols j = ' + j);
                 var idCol = elGrpCols[j].id;
                 var idColArr = idCol.split('_');
 
                 var elColFlds = elGrpCols[j].getElementsByClassName('nc-fld');
                 for (var k=0, klen=elColFlds.length; k<klen; k++) {
-                    console.log('looping elColFlds k = ' + k);
+                    // console.log('looping elColFlds k = ' + k);
                     // console.log(elColFlds[k]);
                     var idFld = elColFlds[k].id;
                     var idFldArr = idFld.split('_');
@@ -169,8 +169,9 @@
 
         switch (type) {
             case 'curr':
-            case 'flt': {
-                str = parseFloat(num).toString();
+            case 'flt':
+            case 'pct': {
+                str = (type == 'curr' ? 'USD ' : '') + parseFloat(num).toString() + (type == 'pct' ? ' %' : '');
                 break;
             }
             case 'date': {
@@ -189,8 +190,13 @@
                 str = parseInt(num).toString();
                 break;
             }
+            case 'list':
+            case 'multi': {
+                str = 'Select ' + (type == 'multi' ? 'multiple' : '') + ' from list';
+                break;
+            }
             case 'pwd': {
-                str = '******';
+                str = '********';
                 break;
             }
             case 'url': {
@@ -228,10 +234,11 @@
 
     //#region Modal Functions
     function toggleModal(params) {
-        var modal = document.querySelector('.nc-modal');
+        var modal = doc.querySelector('.nc-modal');
         modal.classList.toggle('show-modal');
+        console.log(params);
 
-        if (modal.classList.contains('show-modal')) {
+        /* if (modal.classList.contains('show-modal')) {
             console.log('showing modal...');
             // doc.getElementById('btnModalOK').addEventListener('click', function(e) {
             //     modalFldBtnClk({ ok: true });
@@ -249,25 +256,69 @@
             // doc.getElementById('btnModalCancel').removeEventListener('click', function(e) {
             //     modalFldBtnClk({ cancel: true });
             // });
-        }
+        } */
 
         if (params) {
-            if (params.fldid) {
-                var fldSrc = doc.getElementById('fldSrc');
-                if (!fldSrc) {
-                    return;
+            var arrInner = modal.getElementsByClassName('nc-modal-content');
+            for (var i=0, n=arrInner.length; i<n; i++) {
+                if (arrInner[i].classList.contains('nc-hidden') == false) {
+                    arrInner[i].classList.add('nc-hidden');
                 }
-                
-                var fldData = doc.getElementById('ncEl_' + params.fldid);
-                if (['list', 'multi'].indexOf(fldData.getAttribute('data-type')) >= 0) {
-                    if (fldSrc.classList.contains('nc-hidden') == true) {
-                        fldSrc.classList.remove('nc-hidden');
+            }
+            
+            var innerModal = doc.getElementById('nc' + params.modal + 'Modal');
+            if (innerModal) {
+                console.log('showing modal form = ' + params.modal);
+                innerModal.classList.remove('nc-hidden');
+            }
+
+            switch(params.modal) {
+                case 'btn': {
+                    console.log('toggle btn modal');
+                    if (params.id) {
+                        /* var fldSrc = doc.getElementById('fldSrc');
+                        if (!fldSrc) {
+                            return;
+                        } */
+                        
+                        /* var fldData = doc.getElementById('ncEl_' + params.id);
+                        if (['list', 'multi'].indexOf(fldData.getAttribute('data-type')) >= 0) {
+                            if (fldSrc.classList.contains('nc-hidden') == true) {
+                                fldSrc.classList.remove('nc-hidden');
+                            }
+                        }
+                        else {
+                            if (fldSrc.classList.contains('nc-hidden') == false) {
+                                fldSrc.classList.add('nc-hidden');
+                            }
+                        } */
                     }
+                    break;
                 }
-                else {
-                    if (fldSrc.classList.contains('nc-hidden') == false) {
-                        fldSrc.classList.add('nc-hidden');
+                case 'fld': {
+                    console.log('toggle fld modal');
+                    if (params.id) {
+                        var fldSrc = doc.getElementById('fldSrc');
+                        if (!fldSrc) {
+                            return;
+                        }
+                        
+                        var fldData = doc.getElementById('ncEl_' + params.id);
+                        if (['list', 'multi'].indexOf(fldData.getAttribute('data-type')) >= 0) {
+                            if (fldSrc.classList.contains('nc-hidden') == true) {
+                                fldSrc.classList.remove('nc-hidden');
+                            }
+                        }
+                        else {
+                            if (fldSrc.classList.contains('nc-hidden') == false) {
+                                fldSrc.classList.add('nc-hidden');
+                            }
+                        }
                     }
+                    break;
+                }
+                default: {
+                    break;
                 }
             }
         }
@@ -276,35 +327,70 @@
     function getModalFldEls() {
         var modalFldName = doc.getElementById('modalFldName');
         if (!modalFldName) {
-            console.log('Cannot find modalFldName. Exiting...');
-            // return null;
+            console.log('Cannot find modalFldName...');
         }
 
         var modalFldSrc = doc.getElementById('modalFldSrc');
         if (!modalFldSrc) {
-            console.log('Cannot find modalFldSrc. Exiting...');
-            // return {
-            //     modalFldName: modalFldName
-            // };
+            console.log('Cannot find modalFldSrc...');
+        }
+
+        var modalBtnLbl = doc.getElementById('modalBtnLbl');
+        if (!modalBtnLbl) {
+            console.log('Cannot find modalBtnLbl...');
+        }
+
+        var modalBtnIsDef = doc.getElementById('modalBtnIsDef');
+        if (!modalBtnIsDef) {
+            console.log('Cannot find modalBtnIsDef...');
         }
         
         return {
             modalFldName: modalFldName,
-            modalFldSrc: modalFldSrc
+            modalFldSrc: modalFldSrc,
+            modalBtnLbl: modalBtnLbl,
+            modalBtnIsDef: modalBtnIsDef
         };
+    }
+
+    function showEditBtn(id) {
+        console.log('showEditBtn = ' + id);
+        toggleModal({
+            modal: 'btn',
+            id: id
+        });
+
+        var btnId = 'ncBtn_' + id;
+        var btn = doc.getElementById(btnId);
+        if (!btn) {
+            console.log('Cannot find ncBtn_' + id + '. Exiting...');
+            return;
+        }
+
+        globals.btnEdit = btnId;
+        var modalEls = getModalFldEls();
+
+        var btnName = modalEls.modalBtnLbl;
+        btnName.value = btn.innerHTML;
+        btnName.focus();
+        btnName.select();
+
+        var btnIsDef = modalEls.modalBtnIsDef;
+        // if (btn.classList.contains(''))
     }
 
     // function showEditFld(type, id) {
     function showEditFld(id) {
         console.log('showEditFld = ' + id);
         toggleModal({
-            fldid: id
+            modal: 'fld',
+            id: id
             // fldtype: type
         });
 
         // var fldId = 'ncEl_' + type + '_' + id;
         var fldId = 'ncEl_' + id;
-        var fld = document.getElementById(fldId);
+        var fld = doc.getElementById(fldId);
         if (!fld) {
             console.log('Cannot find ncEl_' + id + '. Exiting...');
             return;
@@ -328,24 +414,60 @@
     }
 
     function modalFldBtnClk(params) {
+        console.log(params);
         if (params.ok) {
             console.log('clicked ok');
             var modalEls = getModalFldEls();
-            var fldName = modalEls.modalFldName;
-            var fldSrc = modalEls.modalFldSrc;
-            // console.log('edited field = ' + globals.fldEdit);
-            
-            if (!globals.fldEdit) {
-                return;
-            }
-            
-            var fldEdit = doc.getElementById(globals.fldEdit);
 
-            if (['list', 'multi'].indexOf(fldEdit.getAttribute('data-type')) >= 0) {
-                fldEdit.setAttribute('data-src', fldSrc.value);
-            }
+            switch(params.modal) {
+                case 'ncbtnModal': {
+                    var btnLbl = modalEls.modalBtnLbl;
+                    var cbDef = modalEls.modalBtnIsDef;
 
-            fldEdit.getElementsByTagName('label')[0].innerHTML = fldName.value.toUpperCase();
+                    if (!globals.btnEdit) {
+                        return;
+                    }
+
+                    var btnEdit = doc.getElementById(globals.btnEdit);
+                    btnEdit.innerHTML = btnLbl.value;
+
+                    if (cbDef.value == 'on') {
+                        if (btnEdit.classList.contains('nc-btn-def') == false) {
+                            btnEdit.classList.add('nc-btn-def');
+                        }
+                    }
+                    else {
+                        if (btnEdit.classList.contains('nc-btn-def') == true) {
+                            btnEdit.classList.remove('nc-btn-def');
+                        }
+                    }
+
+                    break;
+                }
+                case 'ncfldModal': {
+                    console.log('ncfldModal');
+                    var fldName = modalEls.modalFldName;
+                    var fldSrc = modalEls.modalFldSrc;
+                    // console.log('edited field = ' + globals.fldEdit);
+                    
+                    if (!globals.fldEdit) {
+                        return;
+                    }
+                    
+                    var fldEdit = doc.getElementById(globals.fldEdit);
+        
+                    if (['list', 'multi'].indexOf(fldEdit.getAttribute('data-type')) >= 0) {
+                        fldEdit.setAttribute('data-src', fldSrc.value);
+                    }
+        
+                    fldEdit.getElementsByTagName('label')[0].innerHTML = fldName.value.toUpperCase();
+
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
             updateSLObj();
             
             /* var arrEditId = globals.fldEdit.split('_');
@@ -362,7 +484,7 @@
             console.log('clicked cancel');
         }
 
-        toggleModal();
+        toggleModal({ modal: 'fld' });
     }
 
     function modalFldCancel() {
@@ -381,6 +503,17 @@
             var el, par, idEl;
 
             switch(params.type) {
+                case 'btn': {
+                    idEl = 'ncBtn_' + id;
+                    el = doc.getElementById(idEl);
+                    par = doc.getElementById('ncBtns');
+                    par.removeChild(el);
+
+                    var arr = par.getElementsByClassName('nc-btn');
+                    if (arr.length <= 0) {
+                        togglePlaceholder(par, true);
+                    }
+                }
                 case 'field': {
                     idEl = 'ncEl_' + params.id;
                     console.log('idEl = ' + idEl);
@@ -396,43 +529,47 @@
                     par = doc.getElementById('ncGroups');
                     par.removeChild(el);
 
-                    // var gid = jq(this).attr('id');
-                    // console.log('clicked ' + gid);
+                    var arrGrps = par.getElementsByClassName('nc-grp');
+                    if (arrGrps.length <= 0) {
+                        togglePlaceholder(par, true);
+                    }
+                    /* var gid = jq(this).attr('id');
+                    console.log('clicked ' + gid);
                     
-                    // if (confirm('This action cannot be undone. Are you sure?') == false) {
-                    //     return;
-                    // }
+                    if (confirm('This action cannot be undone. Are you sure?') == false) {
+                        return;
+                    }
                     
-                    // idRem = gid.substring(gid.indexOf('_'));
-                    // var k = getObjIndex(objSL.form.grps, 'id', params.id);
-                    // var k = getObjIndex(objSL.form.grps, 'id', idRem);
-                    // for (var i=0, n=objSL.form.grps.length; i<n; i++) {
-                        // var og = objSL.form.grps[i];
-                        // // console.log('i = ' + i + ', og.id = ' + objSL.form.grps[i].id);
+                    idRem = gid.substring(gid.indexOf('_'));
+                    var k = getObjIndex(objSL.form.grps, 'id', params.id);
+                    var k = getObjIndex(objSL.form.grps, 'id', idRem);
+                    for (var i=0, n=objSL.form.grps.length; i<n; i++) {
+                        var og = objSL.form.grps[i];
+                        // console.log('i = ' + i + ', og.id = ' + objSL.form.grps[i].id);
                         
-                        // if (objSL.form.grps[i].id == idRem) {
-                            // k = i;
-                            // break;
-                        // }
-                    // }
+                        if (objSL.form.grps[i].id == idRem) {
+                            k = i;
+                            break;
+                        }
+                    }
                     
-                    // if (k >= 0) {
-                    //     console.log('removing group');
-                    //     objSL.form.grps.splice(k, 1);
-                    // }
-                    // console.log(objSL);
+                    if (k >= 0) {
+                        console.log('removing group');
+                        objSL.form.grps.splice(k, 1);
+                    }
+                    console.log(objSL);
                     
-                    // console.log('to remove = #gdiv' + idRem);
-                    // jq('#gdiv' + idRem).remove();
+                    console.log('to remove = #gdiv' + idRem);
+                    jq('#gdiv' + idRem).remove();
                     
-                    // Also remove all fields from the Suitelet Object
-                    // if (objSL.form.flds) {
-                    //     for (i=objSL.form.flds.length - 1; i>=0; i--) {
-                    //         if (objSL.form.flds[i].container == idRem) {
-                    //             objSL.form.flds.splice(i, 1);
-                    //         }
-                    //     }
-                    // }
+                    Also remove all fields from the Suitelet Object
+                    if (objSL.form.flds) {
+                        for (i=objSL.form.flds.length - 1; i>=0; i--) {
+                            if (objSL.form.flds[i].container == idRem) {
+                                objSL.form.flds.splice(i, 1);
+                            }
+                        }
+                    } */
                 }
                 default: {
                     break;
@@ -497,6 +634,43 @@
         }
     }
 
+    function togglePlaceholder(con, show) {
+        var ph = con.getElementsByClassName('placeholder')[0];
+        if (show && ph.classList.contains('nc-hidden')) {
+            ph.classList.remove('nc-hidden');
+        }
+        else if (!show && (ph.classList.contains('nc-hidden') == false)) {
+            ph.classList.add('nc-hidden');
+        }
+    }
+
+    function addBtn() {
+        var btnName = '';
+        var elBtn, elDiv;
+
+        var idNew = getTS();
+        var ncBtns = doc.getElementById('ncBtns');
+        togglePlaceholder(ncBtns);
+
+        var elBtnDisp = createNewEl({
+            type: globals.elements.DIV,
+            attr: {
+                class: 'nc-btn',
+                id: 'ncBtn_' + idNew
+            },
+            evs: {
+                click: function(e) {
+                    showEditBtn(idNew);
+                    // updateSLObj();
+                }
+            },
+            html: 'Button'
+        });
+
+        ncBtns.appendChild(elBtnDisp);
+        showEditBtn(idNew);
+    }
+
     function addFldGrp() {
         var grpName = '';
         var elGrp, elDiv;
@@ -505,7 +679,7 @@
         // if (!grpName) {
         //     return;
         // }
-
+        
         var idNew = getTS();
         console.log('grpName = ' + grpName + ', idNew = ' + idNew);
 
@@ -605,8 +779,11 @@
         }
 
         elGrp.appendChild(elDiv);
-        doc.getElementById('ncGroups').appendChild(elGrp);
+        var ncGrps = doc.getElementById('ncGroups');
+        ncGrps.appendChild(elGrp);
         doc.getElementById('grpName_' + idNew).focus({})
+
+        togglePlaceholder(ncGrps);
         //#endregion
         
         //#region Add group to Suitelet Object
@@ -1080,24 +1257,35 @@
 
         doc.getElementById('btnAddBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('adding button');
+            // alert('adding button');
+            addBtn();
         });
 
         doc.getElementById('btnAddGrp').addEventListener('click', function(e) {
+            e.preventDefault();
             addFldGrp();
         });
 
         var modalBtns = doc.getElementsByClassName('nc-modal-btn-ok');
+        var con, idCon;
         for (var i=0, n=modalBtns.length; i<n; i++) {
+            console.log('i = ' + i);
+            con = modalBtns[i].closest('.nc-modal-content');
+            idCon = con.id;
+            console.log('idCon = ' + idCon)
             modalBtns[i].addEventListener('click', function(e) {
-                modalFldBtnClk({ ok: true });
+                modalFldBtnClk({ ok: true, modal: idCon });
             });
         }
 
         modalBtns = doc.getElementsByClassName('nc-modal-btn-cancel');
         for (i=0, n=modalBtns.length; i<n; i++) {
+            console.log('i = ' + i + ', ' + modalBtns[i].id);
+            con = modalBtns[i].closest('.nc-modal-content');
+            idCon = con.id;
+            console.log('idCon = ' + idCon)
             modalBtns[i].addEventListener('click', function(e) {
-                modalFldBtnClk({ cancel: true });
+                modalFldBtnClk({ cancel: true, modal: idCon });
             });
         }
     }

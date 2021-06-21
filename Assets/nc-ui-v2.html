@@ -6,14 +6,14 @@
 <div class="nc-wrapper">
     <div class="nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb nc-topbar">
         <input type="text" name="slName" id="slName" class="sl-name" placeholder="Type the name of your Suitelet here...">
-        <button type="button" class="nc-bold nc-btn-def" id="btnBuild">SAVE & BUILD</button>
+        <button type="button" class="nc-bold nc-btn-def" id="btnBuild">Build Suitelet</button>
     </div>
     <div class="nc-flex-row nc-flex-jc-sb nc-main">
         <div class="nc-flex-col nc-sb">
             <div class="nc-bold nc-pn-hdr">Components</div>
             <div class="nc-sb-con">
-                <div class="nc-sb-components nc-flex-col">
-                        <div class="nc-comp-grp-items nc-flex-col" id="ncComponents">
+                <div class="nc-sb-components nc-flex-col" id="ncComponents">
+                    <!-- <div class="nc-comp-grp-items nc-flex-col" id="ncComponents"> -->
                             <!-- <div draggable="true" class="nc-comp-grp-item nc-comp-draggable nc-flex-row nc-flex-ai-ctr" id="ncCompCB">
                                 <div><i class="fas fa-check"></i></div>
                                 <span>Checkbox</span>
@@ -90,44 +90,44 @@
                                 <div><i class="fab fa-internet-explorer"></i></div>
                                 <span>URL</span>
                             </div> -->
-                        </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
         <div class="nc-flex-col nc-ws">
             <div class="nc-bold nc-pn-hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
                 <span>Preview</span>
-                <!-- <div>
-                    <a href="#">Add Field Group</a>
-                    <a href="#">Add Button</a>
-                </div> -->
+                <div class="nc-pn-hdr-actions">
+                    <a href="#" id="btnAddGrp">Add Field Group</a>
+                    <a href="#" id="btnAddBtn">Add Button</a>
+                </div>
             </div>
             <div class="nc-flex-col nc-ws-diag">
                 <div class="nc-diag-sec nc-diag-btns nc-flex-col">
-                    <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
+                    <!-- <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                         <div class="title">
                             <span>Buttons</span>
                         </div>
                         <button type="button" id="btnAddBtn">Add Button</button>
-                    </div>
-                    <div class="con nc-flex-row nc-flex-ai-ctr">
-                        <div class="nc-btn nc-btn-def">Submit</div>
-                        <div class="nc-btn">Apply Filters</div>
-                        <div class="nc-btn">Download Files</div>
+                    </div> -->
+                    <div class="con nc-flex-row nc-flex-ai-ctr" id="ncBtns">
+                        <span class="placeholder">Buttons will go here...</span>
+                        <!-- <div class="nc-btn nc-btn-def">Submit</div>
+                        <div class="nc-btn">Apply Filters</div> -->
+                        <!-- <div class="nc-btn">Download Files</div>
                         <div class="nc-btn">File Case</div>
-                        <div class="nc-btn">File Case</div>
-                        <div class="nc-btn">File Case</div>
-                        <div class="nc-btn">File Case</div>
+                        <div class="nc-btn">File Case</div> -->
                     </div>
                 </div>
                 <div class="nc-diag-sec nc-diag-grps nc-flex-col">
-                    <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
+                    <!-- <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                         <div class="title">
                             <span>Field Groups</span>
                         </div>
                         <button type="button" id="btnAddGrp">Add Field Group</button>
-                    </div>
+                    </div> -->
                     <div class="con nc-flex-col" id="ncGroups">
+                        <span class="placeholder">Field groups will go here...</span>
                         <!-- <div class="nc-grp" id="ncGrp_1623975277215">
                             <div class="hdr nc-flex-row nc-flex-jc-sb nc-flex-ai-ctr">
                                 <input type="text" value="dasdfkjh">
@@ -158,7 +158,7 @@
     </div>
 </div>
 <div class="nc-modal">
-    <div class="nc-fld-prop nc-modal-content nc-hidden" id="ncFldProp">
+    <div class="nc-modal-content nc-hidden" id="ncfldModal">
         <div class="hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
             <span>Field Properties</span>
             <!-- <a href="#" class="close">X</a> -->
@@ -178,13 +178,13 @@
             <div class="fld-row nc-flex-row nc-flex-ai-ctr">
                 <div class="cell-lbl"></div>
                 <div class="cell-con">
-                    <button type="button" class="nc-modal-btn-ok">OK</button>
-                    <button type="button" class="nc-modal-btn-cancel">Cancel</button>
+                    <button type="button" class="nc-modal-btn-ok">OK Field</button>
+                    <button type="button" class="nc-modal-btn-cancel">Cancel Field</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="nc-btn-prop nc-modal-content nc-hidden" id="ncBtnProp">
+    <div class="nc-modal-content nc-hidden" id="ncbtnModal">
         <div class="hdr nc-flex-row nc-flex-ai-ctr nc-flex-jc-sb">
             <span>Button Properties</span>
         </div>
