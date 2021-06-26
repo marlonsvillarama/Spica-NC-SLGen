@@ -3,8 +3,7 @@
     var jq = NS.jQuery || jQuery;
     var globals = {{__globals__}};
     var doc = document || {};
-    var rid = '';
-    var objResp = {};
+    var nsResp = {};
     var objSL = {};
     var CLASSES = {
         group: 'ui-fgrp',
@@ -68,7 +67,8 @@
         objSL = {
             form: {
                 grps: [],
-                flds: []
+                flds: [],
+                btns: []
             },
             list: {},
             script: {},
@@ -78,13 +78,18 @@
 
     function updateSLObj() {
         console.log('...updating SL object...');
-        var elGrps = doc.getElementById('ncGroups');
-        var arrGrps = elGrps.getElementsByClassName('nc-grp');
+        var elArr = doc.getElementById('ncGroups');
+        var arr = elArr.getElementsByClassName('nc-grp');
+        var i, ilen;
 
+        // Clear all data
         resetSLObj();
-        for (var i=0, ilen=arrGrps.length; i<ilen; i++) {
+
+        objSL.name = doc.getElementById('slName').value;
+        
+        for (i=0, ilen=arr.length; i<ilen; i++) {
             // console.log('looping arrGrps i = ' + i);
-            var elGrp = arrGrps[i];
+            var elGrp = arr[i];
             // var idGrpArr = elGrp.id.split('_');
             var elGrpHdr = elGrp.getElementsByClassName('hdr')[0].getElementsByTagName('input')[0];
 
@@ -119,6 +124,20 @@
                 }
             }
         }
+
+        elArr = doc.getElementById('ncBtns');
+        arr = elArr.getElementsByClassName('nc-btn');
+
+        for (i=0, ilen=arr.length; i<ilen; i++) {
+            var elBtn = arr[i];
+
+            objSL.form.btns.push({
+                id: elBtn.id,
+                lbl: elBtn.innerHTML,
+                submit: elBtn.hasAttribute('data-def') == true
+            });
+        }
+        
         console.log(objSL);
     }
     
@@ -192,7 +211,7 @@
             }
             case 'list':
             case 'multi': {
-                str = 'Select ' + (type == 'multi' ? 'multiple' : '') + ' from list';
+                str = 'Select ' + (type == 'multi' ? 'multiple ' : '') + 'from list';
                 break;
             }
             case 'pwd': {
@@ -376,6 +395,8 @@
         btnName.select();
 
         var btnIsDef = modalEls.modalBtnIsDef;
+        btnIsDef.checked = btn.hasAttribute('data-def');
+        console.log('btnIsDef = ' + btnIsDef.checked);
         // if (btn.classList.contains(''))
     }
 
@@ -409,18 +430,21 @@
         });
 
         if (gfld.length > 0) {
-            fldSrc.value = gfld.src;
+            console.log('gfld.length > 0');
+            console.log(gfld);
+            fldSrc.value = gfld[0].src;
         }
     }
 
     function modalFldBtnClk(params) {
         console.log(params);
+
         if (params.ok) {
             console.log('clicked ok');
             var modalEls = getModalFldEls();
 
             switch(params.modal) {
-                case 'ncbtnModal': {
+                case 'btn': {
                     var btnLbl = modalEls.modalBtnLbl;
                     var cbDef = modalEls.modalBtnIsDef;
 
@@ -431,20 +455,23 @@
                     var btnEdit = doc.getElementById(globals.btnEdit);
                     btnEdit.innerHTML = btnLbl.value;
 
-                    if (cbDef.value == 'on') {
+                    if (cbDef.checked == true) {
                         if (btnEdit.classList.contains('nc-btn-def') == false) {
                             btnEdit.classList.add('nc-btn-def');
+                            btnEdit.setAttribute('data-def', true);
                         }
                     }
                     else {
                         if (btnEdit.classList.contains('nc-btn-def') == true) {
                             btnEdit.classList.remove('nc-btn-def');
+                            btnEdit.removeAttribute('data-def');
                         }
                     }
 
+                    // type = 'btn';
                     break;
                 }
-                case 'ncfldModal': {
+                case 'fld': {
                     console.log('ncfldModal');
                     var fldName = modalEls.modalFldName;
                     var fldSrc = modalEls.modalFldSrc;
@@ -462,6 +489,7 @@
         
                     fldEdit.getElementsByTagName('label')[0].innerHTML = fldName.value.toUpperCase();
 
+                    // type = 'fld';
                     break;
                 }
                 default: {
@@ -484,11 +512,7 @@
             console.log('clicked cancel');
         }
 
-        toggleModal({ modal: 'fld' });
-    }
-
-    function modalFldCancel() {
-
+        toggleModal({ modal: params.modal });
     }
     //#endregion Modal Functions
 
@@ -1014,26 +1038,192 @@
         }
     }
 
+    /* function urlencodeFormData(fd){
+        var s = '';
+        function encode(s){ return encodeURIComponent(s).replace(/%20/g,'+'); }
+        for(var pair of fd.entries()){
+            if(typeof pair[1]=='string'){
+                s += (s?'&':'') + encode(pair[0])+'='+encode(pair[1]);
+            }
+        }
+        return s;
+    } */
+
+    function sendToNS(params) {
+        console.log('*** sendToNS ***');
+        var url = '', contentType = '', data = params.data;
+
+        var reqObj = {
+            type: 'POST',
+            data: data
+        };
+
+        switch(params.step) {
+            case 'build': {
+                reqObj.url = globals.url.script;
+                break;
+            }
+            case 'deploy': {
+                reqObj.url = globals.url.deploy;
+                break;
+            }
+            default: {
+                reqObj.url = globals.url.backend;
+                reqObj.contentType = 'application/json';
+                reqObj.data = JSON.stringify(params.data);
+                break;
+            }
+        }
+
+        return jq.ajax(reqObj);
+    }
+
+    async function buildScript(params) {
+        console.log('*** buildScript ***');
+
+        // Step 1: Save the contents into the custom record
+        var apiResult = await sendToNS({ data: params.data, step: 'save' });
+        console.log('finished ajax call (save)... ');
+        console.log(apiResult);
+        nsResp = apiResult;
+
+        // Step 2: Create the Suitelet script record
+        var fname = nsResp.file.name;
+        var sname = '[AUTO] SL' + fname;
+        var apiData = {
+            'submitter': 'Save and Deploy',
+            'scripttype': 'SCRIPTLET',
+            'name': sname,
+            'scriptid': '_' + fname.toLowerCase(),
+            'apiversion': '2.0',
+            'description': 'Auto-generated Suitelet on ' + fname,
+            '_multibtnstate_': 'EDIT_SCRIPT:submitter:submitdeploy',
+            'owner': globals.user,
+            'type': 'script',
+            'id': (nsResp.script ? nsResp.script.id : ''),
+            // 'id': 569,
+            'scriptfile': nsResp.file.id
+        };
+        // var fd = new FormData();
+        // if (objSL.script.id) {
+        //     scrData.id = objSL.script.id;
+        // }
+        apiResult = await sendToNS({ data: apiData, step: 'build' });
+        /* jq.ajax({
+            url: globals.url.script,
+            type: 'POST',
+            data: scrData
+        }); */
+
+        /* for (var key in scrData) {
+            if (!scrData.hasOwnProperty(key)) {
+                continue;
+            }
+            fd.append(key, scrData[key]);
+        }
+
+        sendResult = await sendToNS({ data: fd, step: 'build' }); */
+        console.log('finished ajax call (build)... ');
+        console.log(apiResult);
+
+        var s1 = apiResult.substring(apiResult.indexOf('copytoaccount.nl'));
+        var s2 = s1.substring(s1.indexOf('id=') + 3, s1.indexOf('"'));
+        console.log('s2 = ' + s2);
+        nsResp.script = { id: s2 };
+        
+        if (nsResp.deploy) {
+            console.log('deployment exists... exiting now');
+            
+            /* $btn.text(btnBuildTxt);
+            if ($btn.hasClass('ui-btn-disabled')) {
+                $btn.removeClass('ui-btn-disabled');
+                $btn.addClass('ui-btn-def');
+            } */
+            
+            return;
+        }
+
+        // Step 3: Deploy the Suitelet script
+        apiData = {
+            'submitter': 'Save',
+            'script': s2,
+            'title': sname,
+            'scriptid': '_' + fname.toLowerCase(),
+            'isdeployed': 'T',
+            'status': 'TESTING',
+            'loglevel': 'DEBUG',
+            'runasrole': 3,
+            'type': 'scriptrecord',
+            'id': (nsResp.deploy ? nsResp.deploy.record : ''),
+            'deploymentid': (nsResp.deploy ? nsResp.deploy.id : '')
+        };
+
+        apiResult = await sendToNS({ data: apiData, step: 'deploy' });
+
+        var sUrl = 'fldUrlWindow';
+        var d1, d2;
+        
+        d1 = apiResult.substring(apiResult.indexOf('id="entryformquerystring"')+'id="entryformquerystring"'.length);
+        d2 = d1.substring(d1.indexOf('value="id=')+'value="id='.length, d1.indexOf('">'));
+        console.log('d2 = ' + d2);
+        nsResp.deploy = { record: d2 };
+        
+        d1 = apiResult.substring(apiResult.indexOf(sUrl)+sUrl.length+2);
+        d2 = d1.substring(0,d1.indexOf('</a>'));
+        console.log('d2 = ' + d2);
+        nsResp.deploy.url = d2;
+        nsResp.deploy.id = d2.substring(d2.indexOf('&deploy=')+'&deploy='.length);
+
+        window.open(d2, "_blank");
+        console.log('*** FINISHED AJAX CALLS!!!')
+        console.log(nsResp);
+    }
+
     function build(e) {
         e.preventDefault();
         console.log('BUILDING SUITELET...');
-        console.log(objSL);
+        updateSLObj();
+        // console.log(objSL);
         
         if (validateForm() == false) {
             return;
         }
         
         // Save Suitelet content into file
-        objSL.id = rid;
-        var reqData = {
+        objSL.id = nsResp.id;
+        /* var reqData = {
             type: 'save',
             content: JSON.stringify(objSL)
-        };
+        }; */
         
         var btn = e.target;
-        console.log(btn);
+        // console.log(btn);
         btn.innerHTML = 'Building Suitelet...';
-        toggleBtn(btn, 'nc-btn-def');
+        toggleBtn(btn, 'nc-btn-def-disabled');
+
+        console.log('backend url = ' + globals.url.backend);
+        var payload = {
+            type: 'save',
+            content: objSL
+        };
+        console.log(JSON.stringify(payload));
+
+        buildScript({ data: payload });
+        /* var xhr = new XMLHttpRequest();
+        xhr.open("POST", globals.url.backend);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            console.log('xhr status == ' + xhr.status);
+            console.log(xhr.responseText);
+
+            var objResp = JSON.parse(xhr.responseText);
+
+            if (xhr.status == 200) {
+                rid = objResp.id;
+            }
+        };
+        xhr.send(JSON.stringify(payload)); */
+
         /* if (btn.classList.contains('nc-btn-build-disabled') == false) {
             btn.classList.remove('nc-btn-build')
             btn.classList.add('nc-btn-build-disabled');
@@ -1266,28 +1456,25 @@
             addFldGrp();
         });
 
-        var modalBtns = doc.getElementsByClassName('nc-modal-btn-ok');
-        var con, idCon;
-        for (var i=0, n=modalBtns.length; i<n; i++) {
-            console.log('i = ' + i);
-            con = modalBtns[i].closest('.nc-modal-content');
-            idCon = con.id;
-            console.log('idCon = ' + idCon)
-            modalBtns[i].addEventListener('click', function(e) {
-                modalFldBtnClk({ ok: true, modal: idCon });
-            });
-        }
+        doc.getElementById('ncOkFld').addEventListener('click', function(e) {
+            e.preventDefault();
+            modalFldBtnClk({ ok: true, modal: 'fld' });
+        });
 
-        modalBtns = doc.getElementsByClassName('nc-modal-btn-cancel');
-        for (i=0, n=modalBtns.length; i<n; i++) {
-            console.log('i = ' + i + ', ' + modalBtns[i].id);
-            con = modalBtns[i].closest('.nc-modal-content');
-            idCon = con.id;
-            console.log('idCon = ' + idCon)
-            modalBtns[i].addEventListener('click', function(e) {
-                modalFldBtnClk({ cancel: true, modal: idCon });
-            });
-        }
+        doc.getElementById('ncCancelFld').addEventListener('click', function(e) {
+            e.preventDefault();
+            modalFldBtnClk({ cancel: true, modal: 'fld' });
+        });
+
+        doc.getElementById('ncOkBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            modalFldBtnClk({ ok: true, modal: 'btn' });
+        });
+
+        doc.getElementById('ncCancelBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            modalFldBtnClk({ cancel: true, modal: 'btn' });
+        });
     }
 
     function initDnD() {

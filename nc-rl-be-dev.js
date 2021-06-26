@@ -14,7 +14,7 @@
         'N/search',
         'N/url',
         
-        './rl-gen-lib-parser-dev.js'
+        './nc-rl-lib-parser-dev.js'
     ],
 
     function(
@@ -243,7 +243,8 @@
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             
             var str = '';
-            var objContent = JSON.parse(params.content);
+            // var objContent = JSON.parse(params.content);
+            var objContent = params.content;
             LOG.debug({ title: LOG_TITLE + ' content', details: objContent });
             // LOG.debug({ title: LOG_TITLE + ' content type', details: Object.prototype.toString.call(objContent) });
             
@@ -279,14 +280,14 @@
                     });
                     LOG.debug({ title: LOG_TITLE + ' saving name', details: objContent.name });
                     rec.setValue({
-                        fieldId: 'name',
+                        fieldId: RECORDS.SL.FIELDS.NAME,
                         value: objContent.name
                     });
                     
                     if (objContent.form) {
                         LOG.debug({ title: LOG_TITLE + ' saving ' + RECORDS.SL.FIELDS.FORM, details: objContent.form });
                         rec.setValue({
-                            fieldId: 'custrecord_nc_sl_ui_content',
+                            fieldId: RECORDS.SL.FIELDS.CONTENT,
                             value: JSON.stringify(objContent.form)
                         });
                     }
@@ -377,6 +378,22 @@
             return obj;
         }
         
+        function writeFields(flds, column) {
+            var LOG_TITLE = 'writeFields';
+            LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
+
+            var str = '';
+            var colFlds = [];
+            colFlds = flds.filter(function (x) {
+                return x.col == column;
+            });
+            for (i=0, n=colFlds.length; i<n; i++) {
+                str += PARSER.addField({ fld: colFlds[i], newColumn: (i == 0 && column == 2) });
+            }
+
+            LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
+            return str;
+        }
         /**
          */
         // function parseForm(idFrm, params, name) {
@@ -385,7 +402,7 @@
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             
             var str = '';
-            var i, j, n;
+            var i, n;
             
             // str += 'var ' + idFrm + ' = UI.createForm({ name: "' + name + '" });';
             
@@ -402,9 +419,22 @@
             }
             
             if (params.flds) {
-                for (i=0, n=params.flds.length; i<n; i++) {
-                    str += PARSER.addField(params.flds[i]);
+                str += writeFields(params.flds, 1);
+                str += writeFields(params.flds, 2);
+                /* var colFlds = [];
+                colFlds = params.flds.filter(function (x) {
+                    return x.col == 1;
+                });
+                for (i=0, n=colFlds.length; i<n; i++) {
+                    str += PARSER.addField({ fld: colFlds[i], index: i });
                 }
+
+                colFlds = params.flds.filter(function (x) {
+                    return x.col == 2;
+                });
+                for (i=0, n=colFlds.length; i<n; i++) {
+                    str += PARSER.addField({ fld: colFlds[i], index: i });
+                } */
             }
             
             LOG.debug({ title: LOG_TITLE + ' str', details: str });
@@ -485,7 +515,8 @@
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
             
             var str = '';
-            var objConfig = JSON.parse(params.config);
+            // var objConfig = JSON.parse(params.config);
+            // var objConfig = params.config;
             LOG.debug({ title: LOG_TITLE, details: 'recId = ' + obj.id });
             
             if (!obj.id) {

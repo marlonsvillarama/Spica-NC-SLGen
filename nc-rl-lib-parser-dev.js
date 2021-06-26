@@ -18,7 +18,7 @@ define(
         'N/runtime',
         'N/search',
         
-        './Assets/gen-types.js'
+        './Assets/nc-types.js'
     ],
 
     function(
@@ -43,7 +43,7 @@ define(
         }
         
         function _getFieldId(id) {
-            var str = 'custpage'
+            var str = 'custpage_'
             
             if (id) {
                 str += id;
@@ -104,14 +104,15 @@ define(
         function _addField(params) {
             var LOG_TITLE = PREFIX + '_addField';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
-            LOG.debug({ title: LOG_TITLE + ' params', details: JSON.stringify(params) });
+            LOG.debug({ title: LOG_TITLE + ' fld', details: JSON.stringify(params.fld) });
             
+            var fld = params.fld;
             var str = '';
             str += 'fld = frm.addField({';
             
             var arr = [];
-            arr.push('"id":"' + _getFieldId(params.id) + '"');
-            arr.push('"label":"' + params.lbl + '"');
+            arr.push('"id":"' + _getFieldId(fld.id) + '"');
+            arr.push('"label":"' + fld.lbl + '"');
             
             var obj =_getTypeObject(params.type, CONSTANTS.FIELD_TYPES);
             arr.push('"type":' + (obj ? obj.value : 'UI.FieldType.TEXT'));
@@ -127,6 +128,11 @@ define(
             
             str += arr.join(',');
             str += '});';
+
+            if (params.newColumn == true) {
+                str += 'fld.updateBreakType({breakType :UI.FieldBreakType.STARTCOL});';
+            }
+
             LOG.debug({ title: LOG_TITLE + ' str', details: str });
             
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
