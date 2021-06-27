@@ -186,7 +186,7 @@
                 user: RUNTIME.getCurrentUser().id,
                 components: TYPES.COMPONENTS(),
                 elements: TYPES.ELEMENTS,
-                fieldTypes: TYPES.FIELD_TYPES,
+                // fieldTypes: TYPES.FIELD_TYPES,
                 recTypes: TYPES.RECORD_TYPES('2.0'),
             };
             strHTML = strHTML.replace('{{__globals__}}', JSON.stringify(globals));

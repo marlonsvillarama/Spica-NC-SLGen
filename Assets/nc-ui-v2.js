@@ -210,8 +210,8 @@
                 break;
             }
             case 'list':
-            case 'multi': {
-                str = 'Select ' + (type == 'multi' ? 'multiple ' : '') + 'from list';
+            case 'multiselect': {
+                str = 'Select ' + (type == 'multiselect' ? 'multiple ' : '') + 'from list';
                 break;
             }
             case 'pwd': {
@@ -323,7 +323,7 @@
                         }
                         
                         var fldData = doc.getElementById('ncEl_' + params.id);
-                        if (['list', 'multi'].indexOf(fldData.getAttribute('data-type')) >= 0) {
+                        if (['list', 'multiselect'].indexOf(fldData.getAttribute('data-type')) >= 0) {
                             if (fldSrc.classList.contains('nc-hidden') == true) {
                                 fldSrc.classList.remove('nc-hidden');
                             }
@@ -483,7 +483,7 @@
                     
                     var fldEdit = doc.getElementById(globals.fldEdit);
         
-                    if (['list', 'multi'].indexOf(fldEdit.getAttribute('data-type')) >= 0) {
+                    if (['list', 'multiselect'].indexOf(fldEdit.getAttribute('data-type')) >= 0) {
                         fldEdit.setAttribute('data-src', fldSrc.value);
                     }
         
@@ -1088,7 +1088,7 @@
         nsResp = apiResult;
 
         // Step 2: Create the Suitelet script record
-        var fname = nsResp.file.name;
+        var fname = apiResult.file.name;
         var sname = '[AUTO] SL' + fname;
         var apiData = {
             'submitter': 'Save and Deploy',
@@ -1204,8 +1204,12 @@
         console.log('backend url = ' + globals.url.backend);
         var payload = {
             type: 'save',
-            content: objSL
+            content: objSL,
+            file: (nsResp.file ? nsResp.file.id : '')
         };
+        if (nsResp.script) {
+            payload.script = nsResp.script.id;
+        }
         console.log(JSON.stringify(payload));
 
         buildScript({ data: payload });

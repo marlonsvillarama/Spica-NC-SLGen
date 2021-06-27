@@ -245,7 +245,10 @@
             var str = '';
             // var objContent = JSON.parse(params.content);
             var objContent = params.content;
+            var idFile = params.file;
+            var idScript = params.script;
             LOG.debug({ title: LOG_TITLE + ' content', details: objContent });
+            LOG.debug({ title: LOG_TITLE + ' idFile', details: idFile });
             // LOG.debug({ title: LOG_TITLE + ' content type', details: Object.prototype.toString.call(objContent) });
             
             /* var objConfig = JSON.parse(params.config);
@@ -253,8 +256,8 @@
             LOG.debug({ title: LOG_TITLE, details: 'record id = ' + objConfig.id });
             LOG.debug({ title: LOG_TITLE + ' config type', details: Object.prototype.toString.call(objConfig) }); */
             
-            var rec = null;
             // var rid = 0;
+            var rec = null;
             var obj = {};
             try {
                 if (objContent.id) {
@@ -354,6 +357,22 @@
                 // }
                 LOG.debug({ title: LOG_TITLE + ' output file', details: fId });
                 
+                // If the script record is specified, we replace its script file and delete the old file.
+                if (idScript) {
+                    var slLookup = SEARCH.lookupFields({
+                        type: 'suitelet',
+                        id: idScript,
+                        columns: [ 'scriptfile' ]
+                    });
+                    LOG.debug({ title: LOG_TITLE, details: JSON.stringify(slLookup) });
+                    // RECORD.submitFields({
+                    //     type: 'suitelet',
+                    //     id: idScript,
+                    //     values: {
+                    //         scriptfile: fId
+                    //     }
+                    // });
+                }
             }
             catch (ex) {
                 var msg = 'Unable to save content: ' + ex.toString();
@@ -381,14 +400,19 @@
         function writeFields(flds, column) {
             var LOG_TITLE = 'writeFields';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
+            LOG.debug({ title: LOG_TITLE + ' flds', details: JSON.stringify(flds) });
 
             var str = '';
             var colFlds = [];
             colFlds = flds.filter(function (x) {
                 return x.col == column;
             });
-            for (i=0, n=colFlds.length; i<n; i++) {
+            LOG.debug({ title: LOG_TITLE + ' colFlds.length = ' + colFlds.length, details: JSON.stringify(colFlds) });
+
+            for (var i=0, n=colFlds.length; i<n; i++) {
+                LOG.debug({ title: LOG_TITLE + ', i = ' + i, details: JSON.stringify(colFlds[i]) });
                 str += PARSER.addField({ fld: colFlds[i], newColumn: (i == 0 && column == 2) });
+                LOG.debug({ title: LOG_TITLE, details: 'i after writing field = ' + i });
             }
 
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });

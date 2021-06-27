@@ -965,7 +965,9 @@ define(
                     'isinactive',
                     'custrecord_nc_comp_name',
                     'custrecord_nc_comp_lbl',
-                    'custrecord_nc_comp_icon'
+                    'custrecord_nc_comp_icon',
+                    'custrecord_nc_comp_id',
+                    'custrecord_nc_comp_ns_val'
                 ]
             });
             
@@ -976,7 +978,9 @@ define(
                 list.push({
                     "name": res[i].getValue({ name: 'custrecord_nc_comp_name' }),
                     "lbl": res[i].getValue({ name: 'custrecord_nc_comp_lbl' }),
-                    "icon": res[i].getValue({ name: 'custrecord_nc_comp_icon' })
+                    "icon": res[i].getValue({ name: 'custrecord_nc_comp_icon' }),
+                    "id": res[i].getValue({ name: 'custrecord_nc_comp_id' }),
+                    "value": res[i].getValue({ name: 'custrecord_nc_comp_ns_val' })
                 });
             }
             
@@ -1010,7 +1014,7 @@ define(
         return {
             COMPONENTS: _getComponents,
             ELEMENTS: _elements,
-            FIELD_TYPES: _fld_types,
+            // FIELD_TYPES: _fld_types,
             RECORD_TYPES: _getRecordTypes
         }
     }

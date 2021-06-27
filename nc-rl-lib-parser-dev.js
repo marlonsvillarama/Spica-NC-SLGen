@@ -57,14 +57,16 @@ define(
         
         /**
          */
-        function _getTypeObject(type, arrTypes) {
+        function _getTypeObject(type, arrRef) {
             var LOG_TITLE = PREFIX + '_getTypeObject';
             LOG.debug({ title: LOG_TITLE, details: '*** START ***' });
-            
+            LOG.debug({ title: LOG_TITLE, details: 'type = ' + type + ', arrRef = ' + arrRef.length });
             var obj = '';
             
-            for (var i=0, n=arrTypes.length; i<n; i++) {
-                var ft = arrTypes[i];
+            for (var i=0, n=arrRef.length; i<n; i++) {
+                var ft = arrRef[i];
+                LOG.debug({ title: LOG_TITLE, details: JSON.stringify({ type: type, ft_id: ft.id}) });
+                
                 if (ft.id == type) {
                     obj = ft;
                     break;
@@ -114,16 +116,16 @@ define(
             arr.push('"id":"' + _getFieldId(fld.id) + '"');
             arr.push('"label":"' + fld.lbl + '"');
             
-            var obj =_getTypeObject(params.type, CONSTANTS.FIELD_TYPES);
-            arr.push('"type":' + (obj ? obj.value : 'UI.FieldType.TEXT'));
+            var obj =_getTypeObject(fld.type, CONSTANTS.COMPONENTS());
+            arr.push('"type":' + (obj ? 'UI.FieldType.' + obj.value : 'UI.FieldType.TEXT'));
             
-            if (params.type == 'list' && params.src) {
-                obj = _getTypeObject(params.src, CONSTANTS.RECORD_TYPES('2.0'));
+            if (['list', 'multiselect'].indexOf(fld.type) >= 0 && fld.src) {
+                obj = _getTypeObject(fld.src, CONSTANTS.RECORD_TYPES('2.0'));
                 arr.push('"source":' + obj.value);
             }
             
-            if (params.container) {
-                arr.push('"container":"custpage' + params.container + '"');
+            if (fld.container) {
+                arr.push('"container":"custpage_' + fld.container + '"');
             }
             
             str += arr.join(',');
@@ -134,7 +136,6 @@ define(
             }
 
             LOG.debug({ title: LOG_TITLE + ' str', details: str });
-            
             LOG.debug({ title: LOG_TITLE, details: '*** END ***' });
             return str;
         }
